@@ -1,0 +1,8 @@
+{
+  "name": "greenchili",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+  
+}

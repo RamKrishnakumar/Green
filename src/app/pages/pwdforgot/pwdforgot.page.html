@@ -1,0 +1,30 @@
+<ion-header>
+  <br>
+</ion-header>
+
+<ion-content>
+ <div class="background">
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="Resetpwd(validations_form.value)" style="padding-top:40%;">
+        <div style="padding: 10px">
+          <ion-item style="opacity: 0.9" class="rcorners">
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="../../../assets/icon/envelope.png"></div><ion-label position="floating" color="primary">Registered Email</ion-label>
+            <ion-input type="text" formControlName="registeredemail"></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.registeredemail">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('registeredemail').hasError(validation.type) && (validations_form.get('registeredemail').dirty || validations_form.get('registeredemail').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>  
+          <label class="error-message">{{errorMessage}}</label>
+          <div>
+            <ion-button color="success" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Reset Password</ion-button>
+          </div>
+          <div padding style="font-size: 15px;font-weight: bold;text-align: center;padding-top: 10px;padding-bottom: 0px;">
+            <a (click)="Login()" style="color: cyan">Back to Login Page</a>
+          </div>
+        </div>
+    </form> 
+ </div>
+</ion-content>

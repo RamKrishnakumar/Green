@@ -1,0 +1,27 @@
+.background{
+    background: url(../../../assets/icon/burger.jpg) no-repeat center center fixed;
+    background-size: cover;
+    width:100%;
+    position: absolute;
+    //height:200vh;
+    height: 100%;
+    overflow:auto;
+}
+.error-message
+{
+ color: var(--ion-color-danger);
+}
+.submit-btn
+{
+  margin-top: 10px;
+}
+
+.icons {
+   height: 43px;
+   width: 22px;
+   padding-top: 19px;
+}
+.rcorners {
+   border-radius: 25px;
+   border: 2px solid #000000;
+}
