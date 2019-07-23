@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import {ToastController, AlertController} from '@ionic/angular';
+import {Http, Headers, RequestOptions } from '@angular/http';
 
 
 @Component({
@@ -8,6 +11,128 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public router:Router,
+              public toastController: ToastController,
+              public alertController: AlertController,
+              public http: Http) {
+    
+  }
+  location_response:any;
+  ngOnInit(){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locations/",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.location_response = result;
+      console.log(this.location_response);
+    }, (err) => {
+      this.presentToast();
+    });;
+  }
+
+  //----------------------------------------------------------------------------------------------------------------------
+  //......................Toast Controller  for showing the response of servie when we hit API...........................
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Failed to get api response',
+      color: "danger",
+      duration: 2000, 
+      position: "top",
+      cssClass: "toast-design"   
+    });
+    toast.present();
+  }
+  //......................End...........................................................................................
+  
+//......................Toast Controller  for showing the response of servie when we hit API...........................
+   async falseStatus() {
+    const toast = await this.toastController.create({
+      message: 'Oops! something went wrong',
+      color: "dark",
+      duration: 2000, 
+      position: "top",
+      cssClass: "toast-design"   
+    });
+    toast.present();
+  }
+//......................End...........................................................................................
+  //----------------------------------------------------------------------------------------------------------------------
+
+  logout(){
+    this.router.navigate(['\login']);
+  }
+  aveswgreen_response:any;
+  all_response:any;
+  aveswGreen(){
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/1",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.aveswgreen_response = result;
+      if(this.aveswgreen_response.status==false){
+        this.falseStatus();
+      }
+      else if(this.aveswgreen_response.status==true){
+        
+        this.all_response= {"location": this.location_response.data[0],"location_menu":this.aveswgreen_response};
+        window.localStorage.setItem('key', JSON.stringify(this.all_response));
+        console.log(this.all_response);
+        this.router.navigate(['\location-menu']);
+      }
+    }, (err) => {
+      this.presentToast();
+    });;
+  }
+
+  waldenGreen(){
+    this.router.navigate(['/location-menu'])
+  }
+
+  crowchildGreen(){
+    this.router.navigate(['/location-menu'])
+  }
+
+  crowfootGreen(){
+    this.router.navigate(['/location-menu'])
+  }
+
+  nolanGreen(){
+    this.router.navigate(['/location-menu'])
+  }
+
+
 
 }

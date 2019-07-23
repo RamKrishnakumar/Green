@@ -4,7 +4,14 @@
 
 <ion-content>
  <div class="background">
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="Resetpwd(validations_form.value)" style="padding-top:40%;">
+    <div>
+        <img style="padding:45px" src="../../../assets/icon/logo.png">
+      </div>
+      <div style= "text-align:center;color:white">
+        <h3>Forgot Password?</h3>
+        <p>We just need your registerd Email id to send your password</p>
+      </div>
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="Resetpwd(validations_form.value)" style="padding-top:0%;">
         <div style="padding: 10px">
           <ion-item style="opacity: 0.9" class="rcorners">
             <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="../../../assets/icon/envelope.png"></div><ion-label position="floating" color="primary">Registered Email</ion-label>

@@ -1,0 +1,8 @@
+{
+    "http://wiesoftware.com/greenchili/apisecure/login/": {
+       "target": "http://wiesoftware.com/greenchili/apisecure/login/",
+       "changeOrigin": true,
+       "secure": false,
+       "logLevel": "debug"
+     }
+   }

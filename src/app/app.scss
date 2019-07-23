@@ -4,3 +4,17 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+.img_scss {
+    max-width: 100%;
+    border: 0px;
+    //height: 30vw;
+    width: 100%;
+    padding: 9px 8px 15px 7px;
+    background-color: #000
+}
+ion-toolbar {
+    --background: var(--ion-toolbar-background,var(--ion-color-step-50,#32CD32));
+    --color: var(--ion-toolbar-color,var(--ion-text-color,rgb(0, 0, 0)));
+    //--border-color: var(--ion-toolbar-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.2))));
+}

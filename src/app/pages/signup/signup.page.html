@@ -4,12 +4,13 @@
 <ion-content >
   <div class="background" style="padding-top:5px">
     <div>
-      <h3 style="text-align: center;color:blanchedalmond;">Signup Here</h3>
+      <img style="padding:45px 45px 0px 45px" src="../../../assets/icon/logo.png">
+      <h4 style="text-align: center; color: white">Sign Up</h4>
     </div>
-    <form class="form" [formGroup]="validations_form" (ngSubmit)="signUp(validations_form.value)" style="padding-top:10%;">
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="signUp(validations_form.value)" style="padding-top:0%;">
       <div style="padding: 10px">
          <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label position="floating" color="primary">Name</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label position="floating" color="primary">Name<p style="color: red;float:left">*</p></ion-label>
             <ion-input type="text" formControlName="name"></ion-input> 
           </ion-item>
          <div class="validation-error">
@@ -21,7 +22,7 @@
          </div>
         
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Email</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Email<p style="color: red;float: left">*</p></ion-label>
             <ion-input type="text" formControlName="email"></ion-input>
           </ion-item>
           <div class="validation-error">
@@ -33,19 +34,19 @@
           </div>
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Mobile No.</ion-label>
-            <ion-input type="tel" formControlName="mobilenumber"></ion-input>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Mobile No.<p style="color: red;float: left">*</p></ion-label>
+            <ion-input type="tel" formControlName="contact_no"></ion-input>
           </ion-item>
           <div class="validation-error">
-            <ng-container *ngFor="let validation of validation_messages.mobilenumber">
-              <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('mobilenumber').hasError(validation.type) && (validations_form.get('mobilenumber').dirty || validations_form.get('mobilenumber').touched)">
+            <ng-container *ngFor="let validation of validation_messages.contact_no">
+              <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('contact_no').hasError(validation.type) && (validations_form.get('contact_no').dirty || validations_form.get('contact_no').touched)">
                 <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
               </div>
             </ng-container>
           </div>
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Address</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Address<p style="color: red;float: left">*</p></ion-label>
             <ion-input type="text" formControlName="address"></ion-input>
           </ion-item>
           <div class="validation-error">
@@ -57,7 +58,7 @@
           </div>
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">City</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">City<p style="color: red;float: left">*</p></ion-label>
             <ion-input type="text" formControlName="city"></ion-input>
           </ion-item>
           <div class="validation-error">
@@ -69,7 +70,7 @@
           </div>  
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">province</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">province<p style="color: red;float: left">*</p></ion-label>
             <ion-input type="text" formControlName="province"></ion-input>
           </ion-item>
           <div class="validation-error">
@@ -81,7 +82,7 @@
           </div>
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">ZipCode</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">ZipCode<p style="color: red;float: left">*</p></ion-label>
             <ion-input type="text" formControlName="zipcode"></ion-input>
           </ion-item>
           <div class="validation-error">
@@ -93,24 +94,31 @@
           </div>
           
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Remarks</ion-label>
-            <ion-input type="text"></ion-input>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Remarks<p style="color: red;float: left">*</p></ion-label>
+            <ion-input type="text" formControlName="remark"></ion-input>
           </ion-item>
+          <div class="validation-error">
+            <ng-container *ngFor="let validation of validation_messages.remark">
+              <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('remark').hasError(validation.type) && (validations_form.get('remark').dirty || validations_form.get('remark').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
      <div formGroupName="matching_passwords">
         <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 12px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/lock.png"></div><ion-label position="floating" color="primary">New Password</ion-label>
-          <ion-input type="password" formControlName="enterpassword"></ion-input>
+            <div style="margin-inline-end: 12px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/lock.png"></div><ion-label position="floating" color="primary">Enter password<p style="color: red;float: left">*</p></ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
         <div class="validation-errors">
-          <ng-container *ngFor="let validation of validation_messages.enterpassword">
-            <div style="font-size: 10px" class="error-message" *ngIf="validations_form.get('matching_passwords').get('enterpassword').hasError(validation.type) && (validations_form.get('matching_passwords').get('enterpassword').dirty || validations_form.get('matching_passwords').get('enterpassword').touched)">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div style="font-size: 10px" class="error-message" *ngIf="validations_form.get('matching_passwords').get('password').hasError(validation.type) && (validations_form.get('matching_passwords').get('password').dirty || validations_form.get('matching_passwords').get('password').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
         </div>
         
         <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 12px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/lock.png"></div><ion-label position="floating" color="primary">Confirm Password</ion-label>
+            <div style="margin-inline-end: 12px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/lock.png"></div><ion-label position="floating" color="primary">Confirm Password<p style="color: red;float: left">*</p></ion-label>
           <ion-input type="password" formControlName="confirmpassword"></ion-input>
         </ion-item>
         <div class="validation-errors">

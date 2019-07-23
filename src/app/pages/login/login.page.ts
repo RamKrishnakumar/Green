@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController,AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs';
+
+
 
 @Component({
   selector: 'app-login',
@@ -15,8 +19,9 @@ validations_form: FormGroup;
 errorMessage:string='';
 
 validation_messages= {
-  'username': [
+  'email': [
     {type: 'required',message:'Username is required'},
+    {type: 'pattern', message: 'Enter valid email format'}
   ],
   'password':[
     {type: 'required',message:'Password is required'},
@@ -24,12 +29,15 @@ validation_messages= {
   ],
 };
 
-
-
-  constructor(private formBuilder: FormBuilder,
-              private router: Router,
-              private toastController: ToastController,
-              public authService: AuthService
+location_menu={
+  
+}
+constructor(private formBuilder: FormBuilder,
+            private router: Router,
+            private toastController: ToastController,
+            public authService: AuthService,
+            public http: Http,
+            public alertController: AlertController
               ) { }
 
 
@@ -37,9 +45,9 @@ validation_messages= {
   ngOnInit() {
 
     this.validations_form = this.formBuilder.group({
-      username: new FormControl('', Validators.compose([
+      email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.minLength(5)        
+        Validators.pattern("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}|^[0-9]{10}$")     
       ])),
       password: new FormControl('', Validators.compose([
         Validators.pattern("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$"),
@@ -47,32 +55,171 @@ validation_messages= {
       ])),     
     });
   }
-
-  //Toast Controller  for showing the response of servie when we hit API....................
+//-------------------------------Toastcontrollers------------------------------------------------------------------------
+  //......................Toast Controller  for showing the response of servie when we hit API...........................
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Connection Failed',
       color: "danger",
-      duration: 2000
+      duration: 2000, 
+      position: "top",
+      cssClass: "toast-design"   
     });
     toast.present();
   }
+  //......................End...........................................................................................
 
-  SignUp(){
+  // async Invalid() {
+  //   const toast = await this.toastController.create({
+  //     color: "dark",
+  //     header: this.validate_response.message,
+  //     message: "Please try again",
+  //     duration: 3000,
+  //     position:"top"
+  //   });
+  //   toast.present();
+  // }
+//..................loginSuccess Toaster.................................................................................
+  async loginsuccess() {
+    const toast = await this.toastController.create({
+      header: " Hello, " + this.validate_response.data.name,
+      //message: this.validate_response.message,
+      color: "dark",
+      duration: 3000,
+      position:"top",
+      cssClass:"toast-design"
+    });
+    toast.present();
+  }
+//..................End of loginSuccess Toaster..........................................................................
+//-------------------------------End of Toastcontrollers----------------------------------------------------------------------------------------
+
+
+//----------------------Alert Controllers--------------------------------------------------------------------------------
+//.................Invalid Credentials Alert............................................................................
+async invalid() {
+  const alert = await this.alertController.create({
+    header: 'Alert',
+    message: this.validate_response.message,
+    buttons: ['OK'],
+    cssClass: "toast-design"
+  });
+
+  await alert.present();
+}
+//.................Invalid Credentials Alert............................................................................
+//----------------------End of Alert Controllers--------------------------------------------------------------------------------
+SignUp(){
     
     this.router.navigate(['\signup']);
    }
    
-// Function works when Login Butto on login.html pressed..........
+//..... Function works when Login Butto on login.html pressed.................................................................
   private validate_response: any;
-   tryLogin(value){
-    this.authService.login(this.validations_form.value).then((result) => {
+  tryLogin(){
+    return new Promise((resolve,reject) => {
+      let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers", body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
       this.validate_response = result;
-      console.log(this.validate_response);
+      if(this.validate_response.status==false){
+          this.invalid();
+          this.validations_form.reset();
+        }
+       else if(this.validate_response.status==true){
+          this.validations_form.reset();          
+         this.router.navigate(['\home']);
+         this.loginsuccess();
+         
+         }
     }, (err) => {
       this.presentToast();
-    });
+    });;
   }
+//----------------------------------------------------------------------------------------------------------------------- 
+// Login Button function Ends here---------------------------------------------------------------------------------------
+
+
+   Forgot(){
+    this.router.navigate(['\pwdforgot']);
+  }
+  Home(){
+    this.router.navigate(['\home']);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ // tryLogin() {
+  //   let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+  //   var headers = new Headers({
+  //     'X-API-KEY': '123run',
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     //'Accept': 'application/json'
+  //   });
+  //   const requestOptions = new RequestOptions({ headers: headers });
+  //   this.http.post("http://localhost/greenchili/login/auth/user_login/", body, requestOptions)
+  //     .subscribe(data => {
+  //       console.log(data['_body']);
+  //      }, error => {
+  //       console.log(error);
+  //     });
+  // }
+
+
+
+
+
+
   // tryLogin(value) {
   //   this.authService.test(this.validations_form.value).subscribe((data: {}) => {
   //     console.log(data);
@@ -83,10 +230,4 @@ validation_messages= {
   //   })
     
   // }
-// Login Button function Ends here----------------------------------------------------------------------
-
-
-   Forgot(){
-    this.router.navigate(['\pwdforgot']);
-  }
 }

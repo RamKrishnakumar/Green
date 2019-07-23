@@ -1,14 +1,60 @@
 <ion-header>
   <ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
     <ion-title>
-      Ionic Blank
+      Our Locations
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    
+  
+    <div>
+    <div class="card_design1" style="float: left"  (click)="aveswGreen()">
+        <ion-card-content style="text-align: center">
+            <ion-icon name="pin" size="large"></ion-icon>
+              <p></p>
+              <p>17 AveSW Green Chili</p>
+              <p>(403)277-3000</p>
+          </ion-card-content>
+      </div>
+      <div class="card_design1" style="float: left"  (click)="waldenGreen()">
+        <ion-card-content style="text-align: center">
+            <ion-icon name="pin" size="large"></ion-icon>
+            <p></p>
+            <p>151 Walden Green Chili</p>
+            <p>(403)277-3000</p>
+        </ion-card-content>
+      </div>
   </div>
+    
+  <div>
+    <div class="card_design2" style="float: left"  (click)="crowchildGreen()">
+        <ion-card-content style="text-align: center">
+            <ion-icon name="pin" size="large"></ion-icon>
+            <p></p>
+            <p >2128 Crowchild Green Chili </p>
+            <p>(403)277-3000</p>
+        </ion-card-content>
+      </div>
+      <div class="card_design2" style="float: left" (click)="crowfootGreen()">
+        <ion-card-content style="text-align: center">
+            <ion-icon name="pin" size="large"></ion-icon>
+            <p></p>
+            <p>150 Crowfoot Green Chili</p>
+            <p>(403)277-3000</p>
+        </ion-card-content>
+      </div>
+  </div>
+  <div class="card_design3" style="float: left" (click)="nolanGreen()">
+    <ion-card-content style="text-align: center">
+        <ion-icon name="pin" size="large"></ion-icon>
+        <p></p>
+        <p>8 Nolan Green Chili </p>
+        <p>(403)277-3000</p>
+    </ion-card-content>
+  </div>  
 </ion-content>

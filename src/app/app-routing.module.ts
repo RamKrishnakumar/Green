@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
   { path: 'pwdforgot', loadChildren: './pages/pwdforgot/pwdforgot.module#PwdforgotPageModule' },
+  { path: 'location-menu', loadChildren: './pages/location-menu/location-menu.module#LocationMenuPageModule' },
   
 ];
 
