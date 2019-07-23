@@ -77,8 +77,9 @@ export class HomePage {
   logout(){
     this.router.navigate(['\login']);
   }
-  aveswgreen_response:any;
-  all_response:any;
+  public aveswgreen_response:any;
+  public all_response:any;
+  
   aveswGreen(){
     return new Promise((resolve,reject) => {
       
@@ -118,21 +119,154 @@ export class HomePage {
   }
 
   waldenGreen(){
-    this.router.navigate(['/location-menu'])
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/2",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.aveswgreen_response = result;
+      if(this.aveswgreen_response.status==false){
+        this.falseStatus();
+      }
+      else if(this.aveswgreen_response.status==true){
+        
+        this.all_response= {"location": this.location_response.data[1],"location_menu":this.aveswgreen_response};
+        window.localStorage.setItem('key', JSON.stringify(this.all_response));
+        console.log(this.all_response);
+        this.router.navigate(['\location-menu']);
+      }
+    }, (err) => {
+      this.presentToast();
+    });;
   }
 
   crowchildGreen(){
-    this.router.navigate(['/location-menu'])
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/3",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.aveswgreen_response = result;
+      if(this.aveswgreen_response.status==false){
+        this.falseStatus();
+      }
+      else if(this.aveswgreen_response.status==true){
+        
+        this.all_response= {"location": this.location_response.data[2],"location_menu":this.aveswgreen_response};
+        window.localStorage.setItem('key', JSON.stringify(this.all_response));
+        console.log(this.all_response);
+        this.router.navigate(['\location-menu']);
+      }
+    }, (err) => {
+      this.presentToast();
+    });;
   }
 
   crowfootGreen(){
-    this.router.navigate(['/location-menu'])
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/4",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.aveswgreen_response = result;
+      if(this.aveswgreen_response.status==false){
+        this.falseStatus();
+      }
+      else if(this.aveswgreen_response.status==true){
+        
+        this.all_response= {"location": this.location_response.data[3],"location_menu":this.aveswgreen_response};
+        window.localStorage.setItem('key', JSON.stringify(this.all_response));
+        console.log(this.all_response);
+        this.router.navigate(['\location-menu']);
+      }
+    }, (err) => {
+      this.presentToast();
+    });;
   }
 
   nolanGreen(){
-    this.router.navigate(['/location-menu'])
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/5",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.aveswgreen_response = result;
+      if(this.aveswgreen_response.status==false){
+        this.falseStatus();
+      }
+      else if(this.aveswgreen_response.status==true){
+        
+        this.all_response= {"location": this.location_response.data[4],"location_menu":this.aveswgreen_response};
+        window.localStorage.setItem('key', JSON.stringify(this.all_response));
+        console.log(this.all_response);
+        this.router.navigate(['\location-menu']);
+      }
+    }, (err) => {
+      this.presentToast();
+    });;
   }
-
-
-
 }

@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+   
+    <div *ngFor="let page of appPages">
+      <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+    </div>
+    <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>location_menu</ion-title>
@@ -12,9 +16,36 @@
   <p style="font-size: 22px">{{all_response.location.title}}</p>
   <p style="font-size:16px;margin-top: -20px;">{{all_response.location.contact}}</p>
 </div>
-<!-- <div class="card_design1" style="float: left"  (click)="aveswGreen()" >
-    <ion-card-content style="text-align: center">
-          <p>{{app_response.location_menu.data[0].title}}</p>
-    </ion-card-content>
-  </div> -->
+<div >
+ <ion-card class="card_design1" >
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[0].title}}</p>
+  </ion-card-title>
+ </ion-card>
+ <ion-card class="card_design1">
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[1].title}}</p>
+  </ion-card-title>
+ </ion-card>
+ <ion-card class="card_design1">
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[2].title}}</p>
+  </ion-card-title>
+ </ion-card>
+ <ion-card class="card_design1">
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[3].title}}</p>
+  </ion-card-title>
+ </ion-card>
+ <ion-card class="card_design1">
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[4].title}}</p>
+  </ion-card-title>
+ </ion-card>
+ <ion-card class="card_design1">
+  <ion-card-title style="font-weight: bold;font-size: 20px; color: black; text-align: center;margin-top: 6%;font-size: 5vw">
+    <p>{{all_response.location_menu.data[5].title}}</p>
+  </ion-card-title>
+ </ion-card>
+</div>
 </ion-content>
