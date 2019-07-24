@@ -19,6 +19,7 @@ export class HomePage {
   }
   location_response:any;
   ngOnInit(){
+    window.localStorage.clear();
     return new Promise((resolve,reject) => {
       var headers = new Headers({
             //'X-API-KEY': '123run',

@@ -1,9 +1,8 @@
 <ion-header>
-  <ion-toolbar>
-   
+  <ion-toolbar>   
     <div *ngFor="let page of appPages">
       <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
-    </div>
+    </div>    
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>

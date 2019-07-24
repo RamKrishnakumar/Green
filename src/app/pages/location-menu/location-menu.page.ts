@@ -25,6 +25,7 @@ export class LocationMenuPage implements OnInit {
   //public menuType = this.all_response.location_menu;
   public location_title: any;
   ngOnInit() {
+  window.localStorage.clear();
   console.log(this.all_response.location_menu.data[0].title);
   }
 
@@ -63,6 +64,7 @@ export class LocationMenuPage implements OnInit {
 public your_locationid:any;
 public menu_id:any;
 public menu_response: any;
+public set_response: any;
   dishList1(){
     return new Promise((resolve,reject) => {
       this.your_locationid= this.all_response.location_menu.data[0].location_id;
@@ -73,12 +75,9 @@ public menu_response: any;
             //'username': 'devpankaj',
             //'password': 'devpankaj',
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
+            'Accept': 'application/json',            
           });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
+          const requestOptions = new RequestOptions({ headers: headers });          
           this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenuDishes/"+this.your_locationid+"/"+ this.menu_id ,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
@@ -86,12 +85,22 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
-      
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){
+        this.set_response = {"location_menu":this.all_response.location_menu.data[0], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }      
     }, (err) => {
       this.presentToast();
     });;
   }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
   dishList2(){
     return new Promise((resolve,reject) => {
@@ -116,12 +125,23 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){
+        this.set_response = {"location_menu":this.all_response.location_menu.data[1], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }
       
     }, (err) => {
       this.presentToast();
     });;
   }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
   dishList3(){
     return new Promise((resolve,reject) => {
@@ -146,12 +166,23 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){
+        this.set_response = {"location_menu":this.all_response.location_menu.data[2], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }
       
     }, (err) => {
       this.presentToast();
     });;
   }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
   dishList4(){
     return new Promise((resolve,reject) => {
@@ -176,12 +207,23 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){
+        this.set_response = {"location_menu":this.all_response.location_menu.data[3], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }
       
     }, (err) => {
       this.presentToast();
     });;
   }
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
   dishList5(){
     return new Promise((resolve,reject) => {
@@ -193,12 +235,9 @@ public menu_response: any;
             //'username': 'devpankaj',
             //'password': 'devpankaj',
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
+            'Accept': 'application/json'            
           });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
+          const requestOptions = new RequestOptions({ headers: headers });          
           this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenuDishes/"+this.your_locationid+"/"+ this.menu_id ,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
@@ -206,13 +245,22 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){
+        this.set_response = {"location_menu":this.all_response.location_menu.data[4], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }
       
     }, (err) => {
       this.presentToast();
     });;
   }
-
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
   dishList6(){
     return new Promise((resolve,reject) => {
       this.your_locationid= this.all_response.location_menu.data[5].location_id;
@@ -223,12 +271,9 @@ public menu_response: any;
             //'username': 'devpankaj',
             //'password': 'devpankaj',
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
+            'Accept': 'application/json'                     
           });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
+          const requestOptions = new RequestOptions({ headers: headers });          
           this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenuDishes/"+this.your_locationid+"/"+ this.menu_id ,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
@@ -236,12 +281,23 @@ public menu_response: any;
           });
     }).then((result) => {
       this.menu_response = result;
-      console.log(this.menu_response);
-      
+      if(this.menu_response.status==false){
+        this.presentToast();
+      }
+      else if(this.menu_response.status==true){        
+        this.set_response = {"location_menu":this.all_response.location_menu.data[5], "menu_list":this.menu_response};
+        window.localStorage.setItem('menuKey', JSON.stringify(this.set_response));
+        this.router.navigate(['\dishslist']);
+        console.log(this.set_response);
+      }      
     }, (err) => {
       this.presentToast();
     });;
   }
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
 
-
+goBack(){  
+  this.router.navigate(['\home']);
+}
  }
