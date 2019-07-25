@@ -4,8 +4,8 @@
 
 <ion-content>
  <div class="background">
-    <div>
-        <img style="padding:45px" src="../../../assets/icon/logo.png">
+    <div style="margin: 10%; text-align: center">
+        <img src="../../../assets/icon/logo.png">
       </div>
       <div style= "text-align:center;color:white">
         <h3>Forgot Password?</h3>
@@ -14,7 +14,7 @@
     <form class="form" [formGroup]="validations_form" (ngSubmit)="Resetpwd(validations_form.value)" style="padding-top:0%;">
         <div style="padding: 10px">
           <ion-item style="opacity: 0.9" class="rcorners">
-            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="../../../assets/icon/envelope.png"></div><ion-label position="floating" color="primary">Registered Email</ion-label>
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="../../../assets/icon/envelope.png"></div><ion-label position="floating" color="primary">Registered Email<p style="color: red;float:left">*</p></ion-label>
             <ion-input type="text" formControlName="registeredemail"></ion-input> 
           </ion-item>
           <div class="validation-error">
@@ -26,7 +26,7 @@
           </div>  
           <label class="error-message">{{errorMessage}}</label>
           <div>
-            <ion-button color="success" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Reset Password</ion-button>
+            <ion-button color="limegreen" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Reset Password</ion-button>
           </div>
           <div padding style="font-size: 15px;font-weight: bold;text-align: center;padding-top: 10px;padding-bottom: 0px;">
             <a (click)="Login()" style="color: cyan">Back to Login Page</a>

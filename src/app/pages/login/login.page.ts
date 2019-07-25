@@ -21,7 +21,7 @@ errorMessage:string='';
 validation_messages= {
   'email': [
     {type: 'required',message:'Username is required'},
-    {type: 'pattern', message: 'Enter valid email format'}
+    {type: 'pattern', message: 'Enter valid email/10digit mobile no. format'}
   ],
   'password':[
     {type: 'required',message:'Password is required'},
@@ -43,6 +43,7 @@ constructor(private formBuilder: FormBuilder,
 
 
   ngOnInit() {
+    window.localStorage.clear();
 
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -83,7 +84,6 @@ constructor(private formBuilder: FormBuilder,
   async loginsuccess() {
     const toast = await this.toastController.create({
       header: " Hello, " + this.validate_response.data.name,
-      //message: this.validate_response.message,
       color: "dark",
       duration: 3000,
       position:"top",
@@ -121,10 +121,10 @@ SignUp(){
       let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
       
       var headers = new Headers({
-            //'X-API-KEY': '123run',
             //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
+            //"username": 'devpankaj',
+            //"password": 'devpankaj',
+            //"X-API-KEY": '123run',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
             //'Access-Control-Allow-Methods': 'POST',
@@ -145,7 +145,8 @@ SignUp(){
           this.validations_form.reset();
         }
        else if(this.validate_response.status==true){
-          this.validations_form.reset();          
+          this.validations_form.reset(); 
+          window.localStorage.setItem('userKey', JSON.stringify(this.validate_response));         
          this.router.navigate(['\home']);
          this.loginsuccess();
          
@@ -164,70 +165,4 @@ SignUp(){
   Home(){
     this.router.navigate(['\home']);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- // tryLogin() {
-  //   let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
-  //   var headers = new Headers({
-  //     'X-API-KEY': '123run',
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     //'Accept': 'application/json'
-  //   });
-  //   const requestOptions = new RequestOptions({ headers: headers });
-  //   this.http.post("http://localhost/greenchili/login/auth/user_login/", body, requestOptions)
-  //     .subscribe(data => {
-  //       console.log(data['_body']);
-  //      }, error => {
-  //       console.log(error);
-  //     });
-  // }
-
-
-
-
-
-
-  // tryLogin(value) {
-  //   this.authService.test(this.validations_form.value).subscribe((data: {}) => {
-  //     console.log(data);
-  //     this.validate_response = data;
-  //     this.router.navigate(['/home'])
-  //   },(err)=> {
-  //     this.presentToast();
-  //   })
-    
-  // }
 }

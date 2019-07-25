@@ -1,6 +1,7 @@
 .error-message
  {
-  color: var(--ion-color-danger);
+  color: var(--ion-color-warning);
+  font-weight: bold;
  }
  .submit-btn
  {
@@ -36,5 +37,7 @@
 .toast-design{
   text-align: center;
 }
+
+
 
 

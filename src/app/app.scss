@@ -18,3 +18,20 @@ ion-toolbar {
     --color: var(--ion-toolbar-color,var(--ion-text-color,rgb(0, 0, 0)));
     //--border-color: var(--ion-toolbar-border-color,var(--ion-border-color,var(--ion-color-step-150,rgba(0,0,0,0.2))));
 }
+:root {
+    --ion-color-limegreen: #32CD32;
+    --ion-color-limegreen-rgb: 50,250,50;
+    --ion-color-limegreen-contrast: #000000;
+    --ion-color-limegreen-contrast-rgb: 0,0,0;
+    --ion-color-limegreen-shade: #2cdc2c;
+    --ion-color-limegreen-tint: #47fb47;
+  }
+  
+  .ion-color-limegreen {
+    --ion-color-base: var(--ion-color-limegreen);
+    --ion-color-base-rgb: var(--ion-color-limegreen-rgb);
+    --ion-color-contrast: var(--ion-color-limegreen-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-limegreen-contrast-rgb);
+    --ion-color-shade: var(--ion-color-limegreen-shade);
+    --ion-color-tint: var(--ion-color-limegreen-tint);
+  }

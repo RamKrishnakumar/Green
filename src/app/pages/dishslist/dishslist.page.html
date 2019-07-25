@@ -6,10 +6,20 @@
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{set_response.location_menu.title}}</ion-title>
+    <ion-title style="font-size: 6vw">{{set_response.menu_type}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <div class="design-div" *ngFor = "let dish of dishData">
+      <div class="div1-inside-div">
+        <img [src]= "dish_image+dish.image">
+      </div>
+      <div class="div2-inside-div">
+        <p class="p1-inside-div2-inside-div">{{dish.title}}<p>
+        <p class="p2-inside-div2-inside-div">${{dish.main_price}}</p>
+        <p class="p3-inside-div2-inside-div">{{dish.short_description}}</p>
+        <ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">View</ion-button><ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">Add</ion-button>
+      </div>
+    </div>
 </ion-content>

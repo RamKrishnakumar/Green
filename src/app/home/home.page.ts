@@ -11,10 +11,14 @@ import {Http, Headers, RequestOptions } from '@angular/http';
 })
 export class HomePage {
 
+  user_details:any;
   constructor(public router:Router,
               public toastController: ToastController,
               public alertController: AlertController,
               public http: Http) {
+  
+  this.user_details = JSON.parse(window.localStorage.getItem('userKey'));
+  console.log(this.user_details);
     
   }
   location_response:any;
@@ -33,7 +37,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locations/",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -41,7 +45,6 @@ export class HomePage {
           });
     }).then((result) => {
       this.location_response = result;
-      console.log(this.location_response);
     }, (err) => {
       this.presentToast();
     });;
@@ -96,7 +99,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/1",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/1",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -111,7 +114,6 @@ export class HomePage {
         
         this.all_response= {"location": this.location_response.data[0],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        console.log(this.all_response);
         this.router.navigate(['\location-menu']);
       }
     }, (err) => {
@@ -134,7 +136,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/2",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/2",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -149,7 +151,6 @@ export class HomePage {
         
         this.all_response= {"location": this.location_response.data[1],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        console.log(this.all_response);
         this.router.navigate(['\location-menu']);
       }
     }, (err) => {
@@ -172,7 +173,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/3",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/3",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -187,7 +188,6 @@ export class HomePage {
         
         this.all_response= {"location": this.location_response.data[2],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        console.log(this.all_response);
         this.router.navigate(['\location-menu']);
       }
     }, (err) => {
@@ -210,7 +210,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/4",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/4",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -225,7 +225,6 @@ export class HomePage {
         
         this.all_response= {"location": this.location_response.data[3],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        console.log(this.all_response);
         this.router.navigate(['\location-menu']);
       }
     }, (err) => {
@@ -248,7 +247,7 @@ export class HomePage {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/5",requestOptions).subscribe(res => {
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/5",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -263,7 +262,6 @@ export class HomePage {
         
         this.all_response= {"location": this.location_response.data[4],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        console.log(this.all_response);
         this.router.navigate(['\location-menu']);
       }
     }, (err) => {

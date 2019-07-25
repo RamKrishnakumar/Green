@@ -171,7 +171,7 @@ async overrideAlert() {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.post("http://www.wiesoftware.com/greenchili/apisecure/login/registerUsers", body,requestOptions).subscribe(res => {
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/registerUsers", body,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -193,16 +193,6 @@ async overrideAlert() {
     });;
   }
   //-------------SignUp page login button funtion ends here----------------------------------------------- 
-
-  //  signUp(){
-  //   let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.mobilenumber + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode' + this.validations_form.value.zipcode + '&remark='+ "" + '&password=' + this.validations_form.value.enterpassword ;
-  //   this.authService.signUp(body).then((result) => {
-  //     this.validate_response = result;
-  //     console.log(this.validate_response);
-  //   }, (err) => {
-  //     this.presentToast();
-  //   });
-  // }
 }
 
 

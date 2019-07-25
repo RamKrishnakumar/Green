@@ -46,7 +46,11 @@ export class AppComponent {
     title:'Exit',
     role: 'cancel',
     icon:'exit'
-
+  },
+  {
+    title:'Exit',
+    role: 'cancel',
+    icon:'exit'
   }
 ];
 

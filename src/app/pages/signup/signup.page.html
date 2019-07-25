@@ -3,8 +3,8 @@
 </ion-header>
 <ion-content >
   <div class="background" style="padding-top:5px">
-    <div>
-      <img style="padding:45px 45px 0px 45px" src="../../../assets/icon/logo.png">
+    <div style="margin: 10%; text-align: center">
+      <img src="../../../assets/icon/logo.png">
       <h4 style="text-align: center; color: white">Sign Up</h4>
     </div>
     <form class="form" [formGroup]="validations_form" (ngSubmit)="signUp(validations_form.value)" style="padding-top:0%;">
@@ -139,10 +139,10 @@
               </div>
           <label class="error-message">{{errorMessage}}</label>
           <div>
-            <ion-button color="success" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Sign Up</ion-button>
+            <ion-button color="limegreen" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Sign Up</ion-button>
           </div>
           <div>
-            <ion-button color="success" class="submit-btn" expand="block" (click)="login()" >Log In</ion-button>
+            <ion-button color="limegreen" class="submit-btn" expand="block" (click)="login()" >Log In</ion-button>
           </div>
       </div>
     </form>

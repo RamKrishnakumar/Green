@@ -3,16 +3,19 @@
   <ion-buttons slot="start">
     <ion-menu-button></ion-menu-button>
   </ion-buttons>
-    <ion-title>
+    <ion-title style="font-size: 6vw">
       Our Locations
     </ion-title>
+    <div class="profile_div">
+      <ion-icon slot="end" name="contact"></ion-icon><p slot="end">{{user_details.data.name}}</p>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
     
   
-    <div>
+    
     <div class="card_design1" style="float: left"  (click)="aveswGreen()">
         <ion-card-content style="text-align: center">
             <ion-icon name="pin" size="large"></ion-icon>
@@ -29,10 +32,10 @@
             <p>(403)277-3000</p>
         </ion-card-content>
       </div>
-  </div>
+  
     
-  <div>
-    <div class="card_design2" style="float: left"  (click)="crowchildGreen()">
+ 
+    <div class="card_design1" style="float: left"  (click)="crowchildGreen()">
         <ion-card-content style="text-align: center">
             <ion-icon name="pin" size="large"></ion-icon>
             <p></p>
@@ -40,7 +43,7 @@
             <p>(403)277-3000</p>
         </ion-card-content>
       </div>
-      <div class="card_design2" style="float: left" (click)="crowfootGreen()">
+      <div class="card_design1" style="float: left" (click)="crowfootGreen()">
         <ion-card-content style="text-align: center">
             <ion-icon name="pin" size="large"></ion-icon>
             <p></p>
@@ -48,13 +51,13 @@
             <p>(403)277-3000</p>
         </ion-card-content>
       </div>
-  </div>
-  <div class="card_design3" style="float: left" (click)="nolanGreen()">
-    <ion-card-content style="text-align: center">
-        <ion-icon name="pin" size="large"></ion-icon>
-        <p></p>
-        <p>8 Nolan Green Chili </p>
-        <p>(403)277-3000</p>
-    </ion-card-content>
-  </div>  
+  
+      <div class="card_design3" style="float: left" (click)="nolanGreen()">
+        <ion-card-content style="text-align: center">
+            <ion-icon name="pin" size="large"></ion-icon>
+            <p></p>
+            <p>8 Nolan Green Chili </p>
+            <p>(403)277-3000</p>
+        </ion-card-content>
+      </div>  
 </ion-content>
