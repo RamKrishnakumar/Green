@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {Http, Headers, RequestOptions } from '@angular/http';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -11,43 +12,26 @@ import {Http, Headers, RequestOptions } from '@angular/http';
 })
 export class HomePage {
 
+  user_id:any;
   user_details:any;
   constructor(public router:Router,
               public toastController: ToastController,
               public alertController: AlertController,
               public http: Http) {
   
-  this.user_details = JSON.parse(window.localStorage.getItem('userKey'));
-  console.log(this.user_details);
+  //this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
+  //console.log(this.user_id);
     
   }
   location_response:any;
   ngOnInit(){
-    window.localStorage.clear();
-    return new Promise((resolve,reject) => {
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
-      this.location_response = result;
-    }, (err) => {
-      this.presentToast();
-    });;
+    //window.localStorage.clear();
+    this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
+    console.log(this.user_id);
+    this.locationData();
+    this.userDetails();
+    
+    
   }
 
   //----------------------------------------------------------------------------------------------------------------------
@@ -268,4 +252,82 @@ export class HomePage {
       this.presentToast();
     });;
   }
+
+  locationData(){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.location_response = result;
+      console.log(this.location_response);
+    }, (err) => {
+      this.presentToast();
+    });;
+  }
+  user_name:any;
+  userDetails(){
+    //your_user_id;
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.user_id,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            this.presentToast();
+          });
+    }).then((result) => {
+      this.user_details= result;
+      console.log(this.user_details);
+      if(this.user_details.status==false)
+      {
+       this.invalid();  
+      }
+      else if(this.user_details.status==true){
+    this.user_name=this.user_details.data.name;    
+    }
+
+    }, (err) => {
+      this.presentToast();
+    });;
+  }
+  async invalid() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: this.user_details.message,
+      buttons: ['OK'],
+      cssClass: "toast-design"
+    });
+  
+    await alert.present();
+  }
+  //.................Invalid Credentials Alert............................................................................
+  //----------------------End of Alert Controllers--------------------------------------------------------------------------------
+  
 }

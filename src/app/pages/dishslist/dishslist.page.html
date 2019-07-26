@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <div>
-      <ion-icon name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer" (click)="goBack()"></ion-icon>
+    <div *ngFor="let page of backPages">
+      <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
@@ -19,7 +19,7 @@
         <p class="p1-inside-div2-inside-div">{{dish.title}}<p>
         <p class="p2-inside-div2-inside-div">${{dish.main_price}}</p>
         <p class="p3-inside-div2-inside-div">{{dish.short_description}}</p>
-        <ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">View</ion-button><ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">Add</ion-button>
+        <ion-button color="limegreen" expand="full" class="buttons-div2-inside-div" (click)="viewDish(dish.id)">View</ion-button><ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">Add</ion-button>
       </div>
     </div>
 </ion-content>

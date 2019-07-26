@@ -31,7 +31,7 @@ export class LocationMenuPage implements OnInit {
   public location_title: any;
   
   ngOnInit() {
-  window.localStorage.clear();
+  //window.localStorage.clear();
   this.menuType = this.all_response.location_menu.data;
   }
   

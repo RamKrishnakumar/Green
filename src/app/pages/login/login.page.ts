@@ -146,7 +146,7 @@ SignUp(){
         }
        else if(this.validate_response.status==true){
           this.validations_form.reset(); 
-          window.localStorage.setItem('userKey', JSON.stringify(this.validate_response));         
+         window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
          this.router.navigate(['\home']);
          this.loginsuccess();
          

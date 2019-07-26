@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons> 
+    <ion-title>myorders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor="let error of messageError" style="text-align: center; font-weight: bold">
+    <p style="font-size: 30px">{{error.message1}}</p>
+    <p>{{error.message2}}</p>
+    <ion-button [routerDirection]="'root'" [routerLink]="[error.url]">Home</ion-button>
+  </div>
+<div  style="border-style: solid; border-width: 2px;margin: 2px" *ngFor= "let order of order_data">
+  <ion-item style="font-weight: bold">Order id:<p slot="end">{{order.order_id}}</p></ion-item>
+  <ion-item style="font-weight: bold">Product:<p slot="end">{{order.product_order_title}}</p></ion-item>
+  <ion-item style="font-weight: bold">product quantity: <p slot="end">{{order.order_quantity}}</p></ion-item>
+  <ion-item style="font-weight: bold">Date:<p slot="end">{{order.order_date}}</p></ion-item>
+  <ion-item style="font-weight: bold">Payment Method<p slot="end">{{order.payment_type}}</p></ion-item>
+
+</div>
+
+</ion-content>

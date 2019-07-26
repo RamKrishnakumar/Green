@@ -94,7 +94,7 @@ async notvalidAlert() {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.post("http://greenchili.ca/apisecure/login/forgetPassword", body,requestOptions).subscribe(res => {
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/forgetPassword", body,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);

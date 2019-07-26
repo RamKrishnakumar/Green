@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar>
+      <div *ngFor="let page of backPages">
+        <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+      </div>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title style="font-size: 6vw">Product Details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+<div>
+  <div>
+    <img [src]="dish_details_response.image_link+dish_details_response.data.image">
+  </div>
+  <div>
+    <p style="font-weight: bold">Restaurant Details</p>
+    <p>Name: {{dish_details_response.data.restaurants_title}}</p>
+    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.contact}}</div>
+    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.email}}</div>
+    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.address}}</div>
+  </div>
+</div>
+</ion-content>

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,52 +13,56 @@ export class AppComponent {
   public appPages =[
     {title:'Home',
      url:'/home',
-    icon:'home'
+    icon:'home',
+    id:'1'
   },
   {
     title:'Cart',
     url:'/cart',
-    icon:'cart'
+    icon:'cart',
+    id: '2',
   },
   {
     title:'My Orders',
     url:'/myorders',
-    icon:'list-box'
+    icon:'list-box',
+    id:'3'
   },
   {
     title:'Online Reservation',
     url:'/online_reservation',
-    icon:'cart'
+    icon:'cart',
+    id:'4'
   },
   {
     title:'Edit Profile',
     url:'/edit_profile',
-    icon:'create'
+    icon:'create',
+    id:'5'
   },{
     title:'About Us',
     url:'/about_us',
-    icon:'document'
+    icon:'document',
+    id:'6'
   },{
     title:'Logout',
     url:'/login',
-    icon:'log-out'
+    icon:'log-out',
+    id:'7'
   },
   {
     title:'Exit',
     role: 'cancel',
-    icon:'exit'
-  },
-  {
-    title:'Exit',
-    role: 'cancel',
-    icon:'exit'
+    icon:'exit',
+    id:'8'
   }
 ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public router:Router
   ) {
     this.initializeApp();
   }
@@ -65,7 +70,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.splashScreen.show();
     });
   }
 }

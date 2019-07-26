@@ -10,6 +10,9 @@ const routes: Routes = [
   { path: 'pwdforgot', loadChildren: './pages/pwdforgot/pwdforgot.module#PwdforgotPageModule' },
   { path: 'location-menu', loadChildren: './pages/location-menu/location-menu.module#LocationMenuPageModule' },
   { path: 'dishslist', loadChildren: './pages/dishslist/dishslist.module#DishslistPageModule' },
+  { path: 'myorders', loadChildren: './pages/myorders/myorders.module#MyordersPageModule' },
+  { path: 'viewdish', loadChildren: './pages/viewdish/viewdish.module#ViewdishPageModule' },
+  { path: 'dishview', loadChildren: './pages/dishview/dishview.module#DishviewPageModule' },
   
 ];
 
