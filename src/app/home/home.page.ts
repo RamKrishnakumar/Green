@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {ToastController, AlertController} from '@ionic/angular';
 import {Http, Headers, RequestOptions } from '@angular/http';
-import { ThrowStmt } from '@angular/compiler';
+import 'rxjs'
+
 
 
 @Component({

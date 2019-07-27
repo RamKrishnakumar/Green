@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController,AlertController } from '@ionic/angular';
 import { PasswordValidator } from '../../validators/password.validator';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',

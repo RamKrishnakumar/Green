@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { ToastController, AlertController } from '@ionic/angular';
 import 'rxjs';
 import { Router } from '@angular/router';
-import { ResourceLoader } from '@angular/compiler';
+//import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-myorders',
