@@ -308,10 +308,11 @@ export class HomePage {
       console.log(this.user_details);
       if(this.user_details.status==false)
       {
-       this.invalid();  
+       console.log('no user logged in');  
       }
       else if(this.user_details.status==true){
-    this.user_name=this.user_details.data.name;    
+    this.user_name=this.user_details.data.name;
+    window.localStorage.setItem('usernameKey', JSON.stringify(this.user_name));    
     }
 
     }, (err) => {

@@ -43,7 +43,7 @@ constructor(private formBuilder: FormBuilder,
 
 
   ngOnInit() {
-    window.localStorage.clear();
+    window.localStorage.removeItem('userKey');
 
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([

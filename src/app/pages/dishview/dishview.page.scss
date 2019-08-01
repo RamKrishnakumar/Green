@@ -1,0 +1,63 @@
+.img-div-inside-div{
+    height: 48vw;
+    overflow: auto;
+
+}
+.title_div{
+    font-size: 6vw;
+    font-weight: bold;
+}
+.price_div{
+    max-width: 40vw;
+    //float: left;
+    font-size: 5vw;
+    margin: 4vw 40vw 0vw 2vw;
+}
+.button-native{
+    width: 30vw;
+    height: 6vh;
+}
+.button-native2{
+    width: 15vw;
+    height: 6vh;
+}
+.rating-div{
+    font-size: 4vw;
+    margin: 2vw;
+}
+.description-div1{
+    font-weight: bold;
+    margin: 2vw;
+    font-size: 5vw;
+    color: darkslategray;
+    //float: left;
+}
+.description-div2{
+    margin: 2vw;
+    float: left;
+    font-size: 4vw;
+}
+.restraunt-details-div{
+    margin: 2vw;
+    //float: left;
+    font-size: 4vw;
+}
+.restraunt-timing-div{
+    float: left;color: white;
+    text-align: center;
+    background-color: limegreen;
+    width: 100%;
+    border-style: solid;
+    border-width: thick;
+    border-color: white;
+    font-size: 4vw;
+}
+.qty {
+                    
+    button{
+         font-size: 17px;
+         margin: 0 !important;
+         height: 37px !important;
+         line-height: 20px;
+    }
+}

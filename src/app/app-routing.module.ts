@@ -11,7 +11,9 @@ const routes: Routes = [
   { path: 'location-menu', loadChildren: './pages/location-menu/location-menu.module#LocationMenuPageModule' },
   { path: 'dishslist', loadChildren: './pages/dishslist/dishslist.module#DishslistPageModule' },
   { path: 'myorders', loadChildren: './pages/myorders/myorders.module#MyordersPageModule' },
-  { path: 'dishview', loadChildren: './pages/dishview/dishview.module#DishviewPageModule' },
+  { path: 'dishview', loadChildren: './pages/dishview/dishview.module#DishviewPageModule' },  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
+  { path: 'checkoutpage', loadChildren: './pages/checkoutpage/checkoutpage.module#CheckoutpagePageModule' },
+
   
 ];
 

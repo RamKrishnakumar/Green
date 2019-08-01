@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>  
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <div *ngFor="let page of backPages">
+          <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+      </div>
+      <ion-title>
+        Your Cart
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+    <div *ngIf="!isEmptyCart">
+      <div>
+        <h3>
+          <ion-icon name="cart"></ion-icon>
+        </h3>
+        <div>
+        Your cart is empty
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isEmptyCart">
+      <ion-card *ngFor="let itm of cartItem">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+                <h2>
+                  {{itm.name}}
+                </h2>
+            </ion-col>
+            </ion-row>
+            <ion-row>
+             <ion-col>
+              <div>
+                <img src="{{itm.thumb}}">
+              </div>
+             </ion-col>
+            </ion-row>
+            <div>
+                <ion-button color="danger"(click)="removeItem(itm)">
+                   Remove
+                </ion-button>
+                <span class="price">
+                  {{itm.totalPrice | currency:'USD':true}}
+                </span>
+             </div>
+             <div style="color: #333333;" text-right="">
+                Qty: {{itm.count}}
+             </div>
+          </ion-card-content>
+        </ion-card>
+   </div>
+</ion-content>
+   
+<ion-footer class="single-footer" *ngIf="isEmptyCart">  
+  <ion-grid>
+    <ion-row>
+      <ion-col  class="addCart" (click)="checkOut()">
+        <ion-button expand="block" color="secondary">
+          {{totalAmount | currency:'USD':true}}     Checkout
+        </ion-button>  
+      </ion-col>
+    </ion-row>
+  </ion-grid>  
+</ion-footer>

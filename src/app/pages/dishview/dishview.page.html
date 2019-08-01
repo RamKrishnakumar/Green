@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
       <div *ngFor="let page of backPages">
-        <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+        <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
       </div>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -12,15 +12,84 @@
 
 <ion-content>
 <div>
-  <div>
-    <img [src]="dish_details_response.image_link+dish_details_response.data.image">
+  <div class="img-div-inside-div">
+    <img [src]="product.image_link+product.data.image">
+  </div>
+  <div class="title_div">
+    {{product.data.title}}
+  </div>
+  <div class="price_div">
+    ${{product.data.main_price}}
+  </div>
+  <div class="rating-div">
+    <ion-icon name="star"></ion-icon>{{product.rating}}
   </div>
   <div>
-    <p style="font-weight: bold">Restaurant Details</p>
-    <p>Name: {{dish_details_response.data.restaurants_title}}</p>
-    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.contact}}</div>
-    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.email}}</div>
-    <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png">{{dish_details_response.data.address}}</div>
+      <ion-row padding->
+        <ion-col>
+          <h4>
+              Quantity
+          </h4> 
+        </ion-col>
+        <ion-col class="qty" text-right>
+            <button (click)="decreaseProductCount()" ion-button small color="light">
+              -
+            </button>
+            <button ion-button small clear color="dark">
+              {{productCount}}
+            </button>
+            <button (click)="incrementProductCount()" ion-button small color="light">
+              +
+            </button>
+          </ion-col>
+          <ion-col *ngIf="hideme">
+            <ion-button color="limegreen" (click)="addToCart()">Add To Cart</ion-button>
+          </ion-col>
+          <ion-col *ngIf="unhideme">
+            <ion-button  color="limegreen" (click)="viewCart()">View Cart</ion-button>
+          </ion-col>
+      </ion-row>
+    </div>
+  <div class="description-div1">
+    Description
   </div>
+  <div class="description-div2">
+    {{product.data.description}}
+  </div>
+  <div class="description-div1">
+    Restraunt Details
+  </div >
+  <div class="restraunt-details-div">
+   <p style="margin: 0px"><ion-icon name="phone-portrait"></ion-icon>{{product.data.contact}}</p>
+   <p style="margin: 0px"><ion-icon name="mail"></ion-icon>{{product.data.email}}</p>
+   <p style="margin: 0px"><ion-icon name="locate"></ion-icon>{{product.data.address}}</p>
+  </div>
+  <div class="restraunt-timing-div">
+    <ion-grid>
+      <ion-row> 
+        <ion-col>
+          Day
+        </ion-col>
+        <ion-col>
+          Lunch
+        </ion-col>
+        <ion-col>
+          Dinner
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let rest of restaurent_timing">
+        <ion-col>
+          {{rest.week_title}}
+        </ion-col>
+        <ion-col>
+         {{rest.lunch_time}}
+        </ion-col>
+        <ion-col>
+         {{rest.dinner_time}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  
 </div>
 </ion-content>

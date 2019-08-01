@@ -27,12 +27,42 @@ export class MyordersPage implements OnInit {
   public errorMessage=[
     {
      message1:'OOPs!',
-      message2:'No Record History Found',
-      url:'/home'
+     message2:'No Record History Found',
+     url:'/home'
     }]
   
 
   ngOnInit() {
+    this.myOrder();
+  }
+  async apiConnection() {
+    const toast = await this.toastController.create({
+      message: 'Connection Failed',
+      color: "danger",
+      duration: 2000,
+      cssClass:"alert-design",
+      position:"top"
+    });
+    toast.present();
+  }
+
+  async emptyOrder() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: this.order_history.message,
+      buttons: ['OK'],
+      cssClass: "toast-design"
+    });
+  
+    await alert.present();
+  }
+
+myOrder(){
+  if(this.user_id== null){
+    this.emptyOrder();
+    this.messageError=this.errorMessage;
+  }
+  else{
     return new Promise((resolve,reject) => {
       
       
@@ -65,27 +95,8 @@ export class MyordersPage implements OnInit {
       this.apiConnection();
     });;
   }
-  async apiConnection() {
-    const toast = await this.toastController.create({
-      message: 'Connection Failed',
-      color: "danger",
-      duration: 2000,
-      cssClass:"alert-design",
-      position:"top"
-    });
-    toast.present();
-  }
+}
 
-  async emptyOrder() {
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      message: this.order_history.message,
-      buttons: ['OK'],
-      cssClass: "toast-design"
-    });
-  
-    await alert.present();
-  }
 
 backHome(){
   this.router.navigate(['\home']);

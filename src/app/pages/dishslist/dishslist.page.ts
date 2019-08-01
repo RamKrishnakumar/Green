@@ -87,7 +87,7 @@ viewDish(id){
         this.invalid();
       }
       else if(this.dish_details.status==true){
-        window.localStorage.setItem('dishKey', JSON.stringify(this.dish_details));
+        window.localStorage.setItem('selectedProduct', JSON.stringify(this.dish_details));
         this.router.navigate(['\dishview']);
       }
     }, (err) => {
@@ -95,6 +95,9 @@ viewDish(id){
     });;
   }
 
+  goToCart(){
+    this.router.navigate(['\cart']);
+  }
 
 
   
