@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>  
+  <ion-toolbar color="limegreen">  
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
@@ -11,45 +11,51 @@
       </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content >
+<ion-content padding >
     <div *ngIf="!isEmptyCart">
       <div>
-        <h3>
+        <h3 style="text-align: center">
           <ion-icon name="cart"></ion-icon>
         </h3>
-        <div>
+        <div style="text-align: center">
         Your cart is empty
         </div>
       </div>
     </div>
-    <div *ngIf="isEmptyCart">
+    <div  *ngIf="isEmptyCart">
       <ion-card *ngFor="let itm of cartItem">
         <ion-card-content>
           <ion-row>
             <ion-col>
-                <h2>
+                <p style="font-weight: bold">
                   {{itm.name}}
-                </h2>
+                </p>
             </ion-col>
             </ion-row>
             <ion-row>
              <ion-col>
-              <div>
+              <div style="height: 34vw; overflow: auto">
                 <img src="{{itm.thumb}}">
               </div>
              </ion-col>
             </ion-row>
-            <div>
-                <ion-button color="danger"(click)="removeItem(itm)">
-                   Remove
-                </ion-button>
-                <span class="price">
-                  {{itm.totalPrice | currency:'USD':true}}
-                </span>
-             </div>
-             <div style="color: #333333;" text-right="">
-                Qty: {{itm.count}}
-             </div>
+            <div style="background: limegreen; font-size: 5vw">
+              <ion-grid>
+                <ion-row>
+                  <ion-col style="margin-top: 1vh;color: black">
+                      Qty: {{itm.count}}
+                  </ion-col>
+                  <ion-col style="margin-top: 1vh;color:black">
+                      {{itm.totalPrice | currency:'USD':true}}
+                  </ion-col>
+                  <ion-col style="text-align: end;">
+                      <ion-button class="buttons-div2-inside-div" color="danger"(click)="removeItem(itm)">
+                          Remove
+                       </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>                        
           </ion-card-content>
         </ion-card>
    </div>

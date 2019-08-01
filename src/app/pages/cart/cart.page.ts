@@ -58,6 +58,7 @@ export class CartPage implements OnInit {
        this.cartItem = val;
        if(this.cartItem.length > 0){
          this.cartItem.forEach((v, index) => {
+           //this.totalAmount -= this.totalAmount;
            this.totalAmount += parseInt(v.totalPrice);
            });
        this.isEmptyCart=true;
@@ -71,33 +72,11 @@ export class CartPage implements OnInit {
      });
    }
 
-
-  // async loadCartItems(){
-  //    const loading = await loadingController.create({
-  //      message: 'wait'
-  //    });
-  //    loading.present();
-  //    this.cartserviceService.getCartItems()
-  //    .then((val) => {
-  //      this.cartItems = val;
-  //      console.log(this.cartItems);
-  //      if(this.cartItems.length > 0){
-  //        this.cartItems.forEach((v, indx) => {
-  //          this.totalAmount += parseInt(v.totalPrice);
-  //        });
-  //        this.isEmptyCart = false;
-  //      }
-  //      this.isCartItemLoaded = true;
-  //      loading.dismiss();
-  //    })
-  //    .catch(err => {
-  //      console.log(err);
-  //    });
-  //  }
-
    removeItem(itm){
      this.cartserviceService.removeFromCart(itm).then(() => {
        this.loadCartItems();
+       this.totalAmount -= this.totalAmount;
+       
      });
    }
 
