@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'myorders', loadChildren: './pages/myorders/myorders.module#MyordersPageModule' },
   { path: 'dishview', loadChildren: './pages/dishview/dishview.module#DishviewPageModule' },  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
   { path: 'checkoutpage', loadChildren: './pages/checkoutpage/checkoutpage.module#CheckoutpagePageModule' },
+  { path: 'checkout', loadChildren: './pages/checkout/checkout.module#CheckoutPageModule' },
 
   
 ];

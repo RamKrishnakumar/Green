@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartserviceService } from '../../services/cartservice.service';
 import { ToastController, AlertController, PickerController, LoadingController } from '@ionic/angular';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { CheckoutPage } from '../checkout/checkout.page';
 
 //import { PickerOptions, loadingController } from '@ionic/core';
 import { Router } from '@angular/router';
@@ -17,7 +17,42 @@ import { Storage } from '@ionic/storage';
 export class CartPage implements OnInit {
 
   public backPages =[
-    {url: '/dishslist'}];
+    {url: '/location-menu'}];
+
+
+  //Get value on ionChange on IonRadioGroup
+  //selectedRadioGroup:any;
+  //Get value on ionSelect on IonRadio item
+  selectedRadioItem:any;
+
+  radio_list = [
+    {
+      id: '1',
+      name: 'PayPal',
+      value: '1',
+      text: 'PayPal',
+      disabled: false,
+      checked: false,
+      color: 'limegreen',      
+    }, {
+      id: '2',
+      name: 'cod',
+      value: '2',
+      text: 'COD',
+      disabled: false,
+      checked: false,
+      color: 'limegreen',
+    }, {
+      id: '3',
+      name: 'pay_and_pick',
+      value: '3',
+      text: 'Pay & Pick',
+      disabled: false,
+      checked: false,
+      color: 'limegreen'
+    },
+  ];
+
 
   user_id;
   user_name;
@@ -33,22 +68,27 @@ export class CartPage implements OnInit {
   constructor( public cartserviceService: CartserviceService,
                public toastController: ToastController,
                public alertController: AlertController,
-               private pickerCtrl: PickerController,
-               private http: Http,
                public router:Router,
                public loadingController: LoadingController,
-               public storage: Storage) {
+               public storage: Storage,) {
                 this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
-                //this.order_cart = JSON.parse(window.localStorage.getItem('order_cartKey'));
+                
                 this.user_name = JSON.parse(window.localStorage.getItem('usernameKey'));
+                //this.order_cart = JSON.parse(window.localStorage.getItem('order_cartKey'));
                 
                 }
 
   
    ngOnInit() {
      this.loadCartItems();
-     //this.cartItems = JSON.parse(window.localStorage.getItem('cartItemkey'));
+     //console.log(this.user_name);
      }
+
+     radioSelect(event) {
+      this.selectedRadioItem = event.detail.value;
+      console.log(this.selectedRadioItem);
+      window.localStorage.setItem('paymethodKey', JSON.stringify(this.selectedRadioItem));
+    }
 
 
    loadCartItems(){
@@ -56,6 +96,7 @@ export class CartPage implements OnInit {
      this.cartserviceService.getCartItems()
      .then((val) => {
        this.cartItem = val;
+       console.log(this.cartItem);
        if(this.cartItem.length > 0){
          this.cartItem.forEach((v, index) => {
            //this.totalAmount -= this.totalAmount;
@@ -83,12 +124,14 @@ export class CartPage implements OnInit {
    checkOut(){
      var userId= this.user_id;
      if(userId !==null){
-       this.router.navigate(['\checkoutpage']);
+       this.router.navigate(['\checkout']);
+       console.log(this.selectedRadioItem);
      }
      else{
        this.router.navigate(['\login']);
      }
    }
+
 
 
   

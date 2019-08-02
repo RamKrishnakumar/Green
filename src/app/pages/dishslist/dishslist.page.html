@@ -1,24 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <div *ngFor="let page of backPages">
-      <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+      <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>
     <ion-title style="font-size: 6vw">{{set_response.menu_type}}</ion-title>
     <ion-button (click)="goToCart()" slot="end" color="limegreen"><ion-icon name="cart"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-    <div class="design-div" *ngFor = "let dish of dishData">
-      <div class="div1-inside-div">
-        <img [src]= "dish_image+dish.image">
-      </div>
-      <div class="div2-inside-div">
-        <p class="p1-inside-div2-inside-div">{{dish.title}}<p>
-        <p class="p2-inside-div2-inside-div">${{dish.main_price}}</p>
-        <p class="p3-inside-div2-inside-div">{{dish.short_description}}</p>
-        <ion-button color="limegreen" expand="full" class="buttons-div2-inside-div" (click)="viewDish(dish.id)">View</ion-button>
-        <!-- <ion-button color="limegreen" expand="full" class="buttons-div2-inside-div">Add</ion-button> -->
-      </div>
-    </div>
+<ion-content color="dark">
+  <div style="background: black">
+    <ion-card *ngFor = "let dish of dishData" style="background: whitesmoke;cursor: pointer;" (click)="viewDish(dish.id)" >
+      <ion-card-content>
+        <div>
+          <img [src]="dish_image+dish.image">
+        </div>
+        <ion-row style="background: black;font-size: 4vw; font-weight: bold;color: white">
+          <ion-col>
+            {{dish.title}}
+          </ion-col>
+          <ion-col style="text-align: end">
+            ${{dish.main_price}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

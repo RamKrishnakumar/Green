@@ -4,7 +4,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <div *ngFor="let page of backPages">
-          <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-round-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+          <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
       </div>
       <ion-title>
         Your Cart
@@ -23,46 +23,62 @@
       </div>
     </div>
     <div  *ngIf="isEmptyCart">
-      <ion-card *ngFor="let itm of cartItem">
-        <ion-card-content>
-          <ion-row>
-            <ion-col>
-                <p style="font-weight: bold">
-                  {{itm.name}}
-                </p>
-            </ion-col>
-            </ion-row>
+      <ion-card *ngFor="let itm of cartItem" style="height: 30vw;margin:0">
             <ion-row>
-             <ion-col>
+             <ion-col size="6">
               <div style="height: 34vw; overflow: auto">
                 <img src="{{itm.thumb}}">
               </div>
              </ion-col>
+             <ion-col size="4" style="font-size: 4vw">
+                <p style="font-weight: bold">
+                  {{itm.name}}
+                </p>
+                <p style="margin-top: -4vw">
+                    Qty: {{itm.count}}
+                </p>
+                <p style="margin-top: -4vw">
+                    {{itm.totalPrice | currency:'USD':true}}
+                </p>
+                </ion-col>
+                <ion-col size="2">
+                  <ion-icon style="font-size: 13vw;cursor: pointer;" name="trash" (click)="removeItem(itm) "></ion-icon>
+                </ion-col>
             </ion-row>
-            <div style="background: limegreen; font-size: 5vw">
-              <ion-grid>
-                <ion-row>
-                  <ion-col style="margin-top: 1vh;color: black">
-                      Qty: {{itm.count}}
-                  </ion-col>
-                  <ion-col style="margin-top: 1vh;color:black">
-                      {{itm.totalPrice | currency:'USD':true}}
-                  </ion-col>
-                  <ion-col style="text-align: end;">
-                      <ion-button class="buttons-div2-inside-div" color="danger"(click)="removeItem(itm)">
-                          Remove
-                       </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </div>                        
-          </ion-card-content>
+            <!-- <ion-row>
+                <ion-button class="buttons-div2-inside-div" color="danger"(click)="removeItem(itm)">
+                    Remove
+                 </ion-button>
+            </ion-row>                    -->
         </ion-card>
    </div>
 </ion-content>
    
 <ion-footer class="single-footer" *ngIf="isEmptyCart">  
   <ion-grid>
+    <ion-row>
+     <ion-col>
+       Payment Method
+     </ion-col>
+    </ion-row>
+    <ion-list style="margin-bottom: 0px">
+    <ion-radio-group allow-empty-selection = "true" name="radio-group">
+        <ion-item *ngFor="let item of radio_list" (ionSelect)="radioSelect($event)">
+        <ion-label>{{item.text}}</ion-label>
+        <ion-radio
+        slot="end"  
+        mode="md"     
+        name="{{item.name}}" 
+        value="{{item.value}}" 
+        checked="{{item.checked}}" 
+        color="{{item.color}}" 
+        disabled="{{item.disabled}}"
+        >
+     </ion-radio>
+      </ion-item>
+  
+    </ion-radio-group>
+  </ion-list>
     <ion-row>
       <ion-col  class="addCart" (click)="checkOut()">
         <ion-button expand="block" color="secondary">

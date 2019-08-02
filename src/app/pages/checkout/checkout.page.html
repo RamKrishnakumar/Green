@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <div *ngFor="let page of backPages">
+      <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
+    </div>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="text-align: center">
+      <ion-card-header>
+          <ion-card-title>Order Information</ion-card-title>
+          <ion-card-subtitle>Calculated below you'll find your order, taxes, discounts and other amounts included.</ion-card-subtitle>
+      </ion-card-header>
+        <ion-card-content>
+            <ion-row>
+                <ion-col style="font-weight: bold;text-align: start">
+                  Subtotal
+                </ion-col>
+                <ion-col style="text-align: end">
+                  {{productAmt | currency:'USD':true}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col style="font-weight: bold;text-align: start">
+                  GST(5%)
+                </ion-col>
+                <ion-col style="text-align: end">
+                  {{gstAmount | currency:'USD':true}}
+                </ion-col>
+              </ion-row>
+              <br>
+              <ion-row>
+                <ion-col style="font-weight: bold;text-align: start">
+                  Total
+                </ion-col>
+                <ion-col style="text-align: end">
+                  {{total_price | currency:'USD':true}}
+                </ion-col>
+              </ion-row>
+        </ion-card-content>    
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Selected Payment Method
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content style="font-weight: bold; text-align: center">
+      {{payment_method_name}}
+    </ion-card-content>
+
+  </ion-card>
+  <ion-card>
+    <ion-button expand="full" color="limegreen" (click)="placeOrder()">Place Order</ion-button>
+  </ion-card>
+
+</ion-content>
