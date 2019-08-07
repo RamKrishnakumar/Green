@@ -69,10 +69,10 @@ export class DishviewPage implements OnInit {
   addToCart(){
     var productPrice = this.productCount * parseInt(this.product.data.main_price);
     let cartProduct = {
-      product_id: this.product.data.id,
-      name: this.product.data.title,
+      pro_id: this.product.data.id,
+      pro_name: this.product.data.title,
       thumb: this.product.image_link+this.product.data.image,
-      count: this.productCount,
+      qty: this.productCount,
       price: this.product.data.main_price,
       totalPrice:productPrice,
       userId: this.user_id,

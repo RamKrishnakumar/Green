@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Http ,Headers,RequestOptions} from '@angular/http';
 import 'rxjs';
+import { AlertController } from '@ionic/angular';
+
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 
 //let apiUrl = "http://wiesoftware.com/greenchili/apisecure/login/";
@@ -14,49 +19,125 @@ import 'rxjs';
  
 })
 export class AuthService {
+  
+  response:any;
+  test_body
 
   
 
-  constructor(public http: Http, 
+  constructor(public https: Http, 
+              public alertController: AlertController,
+              private http: HttpClient,
                ) { }
-  
-  
-  userLogin(body){
-    
-    return new Promise((resolve,reject) => {
-      var headers = new Headers({
-                  //'Content-Type': 'application/form-data',
-                  //'Accept': 'application/json',
-                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                  'Accept': 'application/json',
-                  //'Access-Control-Allow-Origin' : '*'
+
+               async successResponse() {
+                const alert = await this.alertController.create({
+                  header: 'Alert',
+                  message: 'api hitting successfully',
+                  buttons: ['OK'],
+                  cssClass: "toast-design"
                 });
+              
+                await alert.present();
+              }
+
+              async error() {
+                const alert = await this.alertController.create({
+                  header: 'Alert',
+                  message: this.response,
+                  buttons: ['OK'],
+                  cssClass: "toast-design"
+                });
+              
+                await alert.present();
+              }
+  
+  
+  // userLogin(body){
+    
+  //   return new Promise((resolve,reject) => {
+  //     var headers = new Headers({
+  //                 //'Content-Type': 'application/form-data',
+  //                 //'Accept': 'application/json',
+  //                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+  //                 'Accept': 'application/json',
+  //                 //'Access-Control-Allow-Origin' : '*'
+  //               });
       
-                const requestOptions = new RequestOptions({ headers: headers });
+  //               const requestOptions = new RequestOptions({ headers: headers });
                 
-      this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers",JSON.stringify(body),requestOptions).subscribe(res => {
-        console.log(res);
-         resolve(res.json());
-      }, (err) => {
-        console.log(err);
-        reject(err);
-      });
+  //     this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers",JSON.stringify(body),requestOptions).subscribe(res => {
+  //       console.log(res);
+  //        resolve(res.json());
+         
+  //     }, (err) => {
+  //       console.log(err);
+  //       reject(err);
+  //     });
+  //   });
+  // }
+
+  UserLogin(body){ 
+    return new Promise((resolve,reject) => {
+      //let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+      
+      var headers = new Headers({
+           'Content-Type': 'application/x-www-form-urlencoded',
+           'Accept': 'application/json',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          this.https.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers/", body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           this.response= res.json(); 
+           //this.test_body= body;
+          // this.successResponse();
+           },(err) => {
+            reject(err);
+            //this.response = err;
+            this.test_body=body;
+            //this.error();
+          });
     });
+  }
+  
+  Login(body): Observable<any> {
+    return this.http.post<any>('http://wiesoftware.com/greenchili/apisecure/login/loginUsers/',body).pipe(tap(_ => this.log('login')),
+    catchError(this.handleError('login', []))
+    );
+
+  }
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+  /** Log a HeroService message with the MessageService */
+  private log(message: string) {
+    console.log(message);
   }
   
 
   signUp(body) {
     //let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.mobilenumber + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode' + this.validations_form.value.zipcode + '&remark='+ "" + '&password=' + this.validations_form.value.enterpassword ;
     var headers = new Headers({
-      'X-API-KEY': '123run',
+      //'X-API-KEY': '123run',
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Access-Control-Allow-Origin' : '*'
-      //'Accept': 'application/json'
+     // 'Access-Control-Allow-Origin' : '*'
+      'Accept': 'application/json'
     });
     const requestOptions = new RequestOptions({ headers: headers });
-    this.http.post("http://localhost/greenchili/login-signin", body, requestOptions)
-      .subscribe(data => {
-        console.log(data['_body']);
+    this.http.post("http://localhost/greenchili/login-signin", body).subscribe(res => {
+        console.log(res['_body']);
        }, error => {
         console.log(error);
       });

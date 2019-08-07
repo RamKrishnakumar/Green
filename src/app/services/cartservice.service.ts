@@ -19,10 +19,10 @@ export class CartserviceService {
           result.push(product);
           return this.storage.set(CART_KEY,result);
         } else {
-          let index= result.findIndex(x => x.product_id == product.product_id);
-          let prevQuantity = parseInt(result[index].count);
-         product.count = (prevQuantity + product.count);
-         let currentPrice = (parseInt(product.totalPrice) * product.count);
+          let index= result.findIndex(x => x.pro_id == product.pro_id);
+          let prevQuantity = parseInt(result[index].qty);
+         product.qty = (prevQuantity + product.qty);
+         let currentPrice = (parseInt(product.totalPrice) * product.qty);
          product.totalPrice = currentPrice;
          result.splice(index,1);
          result.push(product);
@@ -49,7 +49,7 @@ export class CartserviceService {
     return this.getCartItems().then(result => {
     if (result) {
     result.forEach((item, index) => {
-    if (item.product_id === product.product_id) {
+    if (item.pro_id === product.pro_id) {
     result.splice(index, 1)
     return this.storage.set(CART_KEY, result);
     }
@@ -74,7 +74,7 @@ export class CartserviceService {
      }
      var i;
      for (i = 0; i < list.length; i++) {
-       if (list[i].product_id == obj.product_id) {
+       if (list[i].pro_id == obj.pro_id) {
          return true;
        }
      }

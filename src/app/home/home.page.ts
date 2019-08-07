@@ -272,11 +272,9 @@ export class HomePage {
            resolve(res.json());
            },(err) => {
             reject(err);
-            this.presentToast();
           });
     }).then((result) => {
       this.location_response = result;
-      console.log(this.location_response);
     }, (err) => {
       this.presentToast();
     });;
@@ -322,7 +320,7 @@ export class HomePage {
   async invalid() {
     const alert = await this.alertController.create({
       header: 'Alert',
-      message: this.user_details.message,
+      message: 'no user details found',
       buttons: ['OK'],
       cssClass: "toast-design"
     });

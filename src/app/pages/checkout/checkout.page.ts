@@ -3,6 +3,7 @@ import { CartserviceService } from '../../services/cartservice.service';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
+import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
 
 
 @Component({
@@ -15,7 +16,13 @@ export class CheckoutPage implements OnInit {
   public backPages =[
     {url: '/cart'}];
 
+  qty;
+  array: any[]= [];
+  array1: any[]= [];
+  array2: any[]= [];
+  array3: any[]= [];
   cartItem: any[]=[];
+  cartItems: any[]=[];
   productAmt: number = 0;
   total_price: number = 0;
   gstAmount: number = 0;
@@ -25,14 +32,20 @@ export class CheckoutPage implements OnInit {
   payment_method:any;
   payment_method_name: any;
   user_details: any;
+  order_response;
   constructor(public cartserviceService: CartserviceService,
               public http: Http,
               public alertController: AlertController,
-              public router: Router) { 
+              public router: Router,
+              private payPal: PayPal) { 
     this.customerId = JSON.parse(window.localStorage.getItem('userKey'));
     this.customerName = JSON.parse(window.localStorage.getItem('usernameKey'));
     this.payment_method = JSON.parse(window.localStorage.getItem('paymethodKey'));
   }
+  paymentAmount: any;
+  currency: string = 'USD';
+  currencyIcon: string = '$';
+  paypal_success_response:any;
 
   ngOnInit() {
     this.loadCartItems();
@@ -75,8 +88,9 @@ export class CheckoutPage implements OnInit {
               //"X-API-KEY": '123run',
               'Content-Type': 'application/x-www-form-urlencoded',
               'Accept': 'application/json',
-              //'Access-Control-Allow-Methods': 'POST',
-              });
+              'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Origin':'*'  
+            });
             const requestOptions = new RequestOptions({ headers: headers });
             //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
             this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.customerId,requestOptions).subscribe(res => {
@@ -91,12 +105,152 @@ export class CheckoutPage implements OnInit {
           this.router.navigate(['\editprofile']);
         }
         else{
+          this.cartserviceService.getCartItems()
+          .then((val) => {
+            this.cartItem = val;
+            var b;
+            for(b in this.cartItem){
+              this.array[b] = this.cartItem[b].pro_id;
+              this.array1[b] = this.cartItem[b].pro_name;
+              this.array2[b]= this.cartItem[b].qty;
+              this.array3[b]= this.cartItem[b].price;
+            }
+            
+            if(this.cartItem.length >0 ){
+              return new Promise((resolve,reject) => {
+                let qty = this.cartItems.forEach((v,idx) => {v.pro_id});
+                let body = 'payment_method=' + this.payment_method +'&email=' + this.user_details.data.email + '&name=' + this.user_details.data.name + '&contact_no=' + this.user_details.data.contact_no + '&remark=' + this.user_details.data.remark + '&province=' + this.user_details.data.province + '&city=' + this.user_details.data.city + '&zipcode=' + this.user_details.data.zipcode + '&address=' + this.user_details.data.address + '&users_id=' + this.user_details.data.users_id + '&total_price=' + this.total_price + '&pro_id=' + this.array + '&pro_name=' + this.array1 + '&qty=' + this.array2 + '&price=' +this.array3;
+                
+                console.log(body);
+                var headers = new Headers({
+                      //"Authorization": 'Basic',
+                      //"username": 'devpankaj',
+                      //"password": 'devpankaj',
+                      //"X-API-KEY": '123run',
+                      'Content-Type': 'application/x-www-form-urlencoded',
+                      'Accept': 'application/json',
+                      'Access-Control-Allow-Methods': 'POST',
+                      'Access-Control-Allow-Origin':'*'
+                      
+                    });
+                    const requestOptions = new RequestOptions({ headers: headers });
+                    //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+                    this.http.post(" http://wiesoftware.com/greenchili/apisecure/payment/paymentBilling", body,requestOptions).subscribe(res => {
+                     resolve(res.json());
+                     },(err) => {
+                      reject(err);
+
+                    });
+              }).then((result) => {
+                this.order_response = result;
+                if(this.order_response==true)
+               {
+                console.log(this.order_response);
+                this.cartserviceService.removeAllCartItems().then(val => {
+                  return val;
+                }).catch(err => {});
+                this.router.navigate(['\myorders']);
+               }                
+              }, (err) => {
+                console.log('something went wrong in placing your  order!');
+              });;
+            }        
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        }
+      }, (err) => {
+        console.log('get be able to hit get user_details api');
+      });;
+    }
+    else if(this.payment_method==1){
+      return new Promise((resolve,reject) => {
+        var headers = new Headers({
+          //"Authorization": 'Basic',
+          //"username": 'devpankaj',
+          //"password": 'devpankaj',
+          //"X-API-KEY": '123run',
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Methods': 'POST',
+              'Access-Control-Allow-Origin': '*'
+        });
+        const requestOptions = new RequestOptions ({headers:headers});
+        this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.customerId,requestOptions).subscribe(res => {
+          resolve(res.json());
+        }, (err) => {
+          reject(err);
+        });
+      }).then ( (result) => {
+        this.user_details = result;
+        console.log(this.user_details);
+        if(this.user_details.data.address == null && this.user_details.data.province == null && this.user_details.data.city == null && this.user_details.data.zipcode == null ){
+          this.router.navigate(['\editprofile']);
+        }
+        else{
+          this.paymentAmount=this.total_price;
+          console.log('Pay ??????????????');
+          this.payPal.init({PayPalEnvironmentProduction: 'ATJCXgYOtGsS7OmWLwxSVl-CoUoON92Z720-vHc76snhDI1EvQhkG7OqBp7IERDH-cYzJJfzVqsbClIA',
+        PayPalEnvironmentSandbox:'sb-bg17y07629@business.example.com'
+      }).then(() => {
+        // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+        this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+          // Only needed if you get an "Internal Service Error" after PayPal login!
+          //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+        })).then(() => {
+          let payment = new PayPalPayment(this.paymentAmount, this.currency, 'Description', 'sale');
+          this.payPal.renderSinglePaymentUI(payment).then((res) => {
+            this.paypal_success_response = this.order_response;
+            console.log(this.paypal_success_response);
+            // Successfully paid
+  
+            // Example sandbox response
+            //
+            // {
+            //   "client": {
+            //     "environment": "sandbox",
+            //     "product_name": "PayPal iOS SDK",
+            //     "paypal_sdk_version": "2.16.0",
+            //     "platform": "iOS"
+            //   },
+            //   "response_type": "payment",
+            //   "response": {
+            //     "id": "PAY-1AB23456CD789012EF34GHIJ",
+            //     "state": "approved",
+            //     "create_time": "2016-10-03T13:33:33Z",
+            //     "intent": "sale"
+            //   }
+            // }
+          }, () => {
+            // Error or render dialog closed without being successful
+          });
+        }, () => {
+          // Error in configuration
+        });
+      }, () => {
+        // Error in initialization, maybe PayPal isn't supported or something else
+      });
           
         }
       }, (err) => {
-        
-      });;
+        console.log(err);
+      })
     }
 
+
   }
+  // this.cartserviceService.getCartItems().then((val) => {
+  //   this.cartItem=val;
+  //   var b;
+  //   for(b in this.cartItem){
+  //     this.array[b] = this.cartItem[b].pro_id;
+  //     this.array1[b] = this.cartItem[b].pro_name;
+  //     this.array2[b]= this.cartItem[b].qty;
+  //     this.array3[b]= this.cartItem[b].price;
+  //   }
+    
+  // }).catch(err =>{
+  //   console.log(err);
+  // });
 }

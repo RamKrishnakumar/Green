@@ -100,45 +100,81 @@ constructor(private formBuilder: FormBuilder,
 async invalid() {
   const alert = await this.alertController.create({
     header: 'Alert',
-    message: this.validate_response.message,
+    message: 'invalid credentials',
     buttons: ['OK'],
     cssClass: "toast-design"
   });
 
   await alert.present();
+
+}
+
+async errorAlert() {
+  const alert = await this.alertController.create({
+    header: 'Alert',
+    message: 'please try again',
+    buttons: ['OK'],
+    cssClass: "toast-design"
+  });
+
+  await alert.present();
+
 }
 //.................Invalid Credentials Alert............................................................................
 //----------------------End of Alert Controllers--------------------------------------------------------------------------------
 SignUp(){
     
-    this.router.navigate(['\signup']);
+    this.router.navigate(['signup']);
    }
    
 //..... Function works when Login Butto on login.html pressed.................................................................
   private validate_response: any;
-  tryLogin(){
-    return new Promise((resolve,reject) => {
-      let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+  // tryLogin(){
+  //   return new Promise((resolve,reject) => {
+  //     let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
       
-      var headers = new Headers({
-            //"Authorization": 'Basic',
-            //"username": 'devpankaj',
-            //"password": 'devpankaj',
-            //"X-API-KEY": '123run',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
+  //     var headers = new Headers({
+  //           //"Authorization": 'Basic',
+  //           //"username": 'devpankaj',
+  //           //"password": 'devpankaj',
+  //           //"X-API-KEY": '123run',
+  //           'Content-Type': 'application/x-www-form-urlencoded',
+  //           'Accept': 'application/json',
+  //           //'Access-Control-Allow-Origin': 'http://localhost:8100',
+  //          // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  //           //'Access-Control-Allow-Headers': 'Content-Type'
             
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers", body,requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  //         });
+  //         const requestOptions = new RequestOptions({ headers : headers });
+  //         //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+  //         this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers", body,requestOptions).subscribe(res => {
+  //          resolve(res.json());
+  //          },(err) => {
+  //           reject(err);
+  //           this.presentToast();
+  //         });
+  //   }).then((result) => {
+  //     this.validate_response = result;
+  //     if(this.validate_response.status==false){
+  //         this.invalid();
+  //         this.validations_form.reset();
+  //       }
+  //      else if(this.validate_response.status==true){
+  //         this.validations_form.reset(); 
+  //        window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
+  //        this.router.navigate(['\home']);
+  //        this.loginsuccess();
+         
+  //        }
+  //   }, (err) => {
+  //     this.presentToast();
+  //   });;
+  // }
+
+  public error: any;
+  tryLogin(){
+   let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+   this.authService.UserLogin(body).then((result) => {
       this.validate_response = result;
       if(this.validate_response.status==false){
           this.invalid();
@@ -147,22 +183,47 @@ SignUp(){
        else if(this.validate_response.status==true){
           this.validations_form.reset(); 
          window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
-         this.router.navigate(['\home']);
+         this.router.navigate(['home']);
          this.loginsuccess();
+         
          
          }
     }, (err) => {
-      this.presentToast();
+      //this.presentToast();
+      this.error= err;
+      this.errorAlert();
+
     });;
   }
+
+  // tryLogin(){
+  //   let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+  //   this.authService.Login(body).subscribe(res => {
+  //     this.validate_response = res;
+  //         if(this.validate_response.status==false){
+  //         this.invalid();
+  //         this.validations_form.reset();
+  //         console.log(this.validations_form.value.email);
+  //       }
+  //      else if(this.validate_response.status==true){
+  //         this.validations_form.reset(); 
+  //        window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
+  //        this.router.navigate(['\home']);
+  //        this.loginsuccess();
+  //        }
+  //   },(err) =>{
+  //     console.log(err);
+  //     this.presentToast();
+  //   }) 
+  // }
 //----------------------------------------------------------------------------------------------------------------------- 
 // Login Button function Ends here---------------------------------------------------------------------------------------
 
 
    Forgot(){
-    this.router.navigate(['\pwdforgot']);
+    this.router.navigate(['pwdforgot']);
   }
   Home(){
-    this.router.navigate(['\home']);
+    this.router.navigate(['home']);
   }
 }
