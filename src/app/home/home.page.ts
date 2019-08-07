@@ -275,6 +275,7 @@ export class HomePage {
           });
     }).then((result) => {
       this.location_response = result;
+      window.localStorage.setItem('locationKey',JSON.stringify(this.location_response));
     }, (err) => {
       this.presentToast();
     });;

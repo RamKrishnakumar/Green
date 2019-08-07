@@ -41,7 +41,7 @@ export class AppComponent {
     id:'5'
   },{
     title:'About Us',
-    url:'/about_us',
+    url:'/about-us',
     icon:'document',
     id:'6'
   },{

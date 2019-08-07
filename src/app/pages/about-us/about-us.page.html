@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>About Us</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div>
+  <ion-card color="dark">
+      <ion-card-header>
+          <ion-card-subtitle >Welcome To </ion-card-subtitle>
+          <ion-card-title>GREEN CHILLI GRILL</ion-card-title>
+        </ion-card-header>
+    <img src="../../../assets/icon/155237722120190312.jpg">
+    <ion-card-content>
+        The restaurant is well known for serving delicious 
+        meals which compliment most dietary requirements with
+        a wide selection of appetizers, soups, salads, 
+        desserts and drinks and restaurant provides Gluten free, 
+        Lactose free and Vegan friendly, so everyone can enjoy 
+        the beautiful dishes without any worry.
+    </ion-card-content>
+    
+  </ion-card>
+  <ion-card color="dark">
+    <ion-card-header style="padding: 10px">
+        <ion-card-subtitle>We Offers Best</ion-card-subtitle>
+        <ion-card-title>FUSION OF FLAVOURS</ion-card-title>
+    </ion-card-header>
+    <img src="../../../assets/icon/flavours.jpg">
+    <ion-card-content>
+        <ion-icon name="md-radio-button-on"></ion-icon>INDIAN FLAVOURS<br>
+        <ion-icon name="md-radio-button-on"></ion-icon>NAPELESE FLAVOURS<br>
+        <ion-icon name="md-radio-button-on"></ion-icon>CHINESE FLAVOURS<br>
+        <ion-icon name="md-radio-button-on"></ion-icon>TIBETIAN FLAVOURS<br>
+        A cuisine are full of fresh wonderful flavours, which allows you to indulge 
+        in a feast of aromatic dishes. We provide very delicious and authentic 
+        vegetarian homemade Nepalese, Indian and Tibetan foods with fresh with high-quality 
+        ingredients.Our Spices are used mildly. We also serve vegetarian diet. Non vegetarian 
+        dishes are also available. Please check the menu. Condiments includea 
+        small amount of pickle, spicy chutney, other main meal side dishes include lime, 
+        sliced lemon and fresh green chili.
+    </ion-card-content>
+  </ion-card>
+  <ion-card color="dark">
+      <ion-card-header>
+          <ion-card-title>RESTAURANT</ion-card-title>
+          <ion-card-subtitle>LOCATIONS</ion-card-subtitle>
+        </ion-card-header>
+    <img src="">
+    <ion-card-content>
+        Green Chilli Grill is a family owned and operated restaurant.
+        <div class="description-div1" *ngFor="let list of locations">
+            {{list.title}}
+          <div class="restraunt-details-div">
+          <p style="margin: 0px"><ion-icon name="phone-portrait"></ion-icon>{{list.contact}}</p>
+          <p style="margin: 0px"><ion-icon name="mail"></ion-icon>{{list.email}}</p>
+          <p style="margin: 0px"><ion-icon name="locate"></ion-icon>{{list.address}}</p>
+        </div>
+        </div>
+
+    </ion-card-content>
+    
+  </ion-card>
+  
+
+</div>
+
+</ion-content>

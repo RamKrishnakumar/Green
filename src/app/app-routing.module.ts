@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'dishview', loadChildren: './pages/dishview/dishview.module#DishviewPageModule' },  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
   { path: 'checkoutpage', loadChildren: './pages/checkoutpage/checkoutpage.module#CheckoutpagePageModule' },
   { path: 'checkout', loadChildren: './pages/checkout/checkout.module#CheckoutPageModule' },
+  { path: 'about-us', loadChildren: './pages/about-us/about-us.module#AboutUsPageModule' },
 
   
 ];
