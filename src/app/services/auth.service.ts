@@ -142,7 +142,39 @@ export class AuthService {
         console.log(error);
       });
   }
+
+  UserDetails(user_id){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.https.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+user_id,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            });
+    });
+  }
   
+  UpdateProfile(user_id,body){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.https.post("http://wiesoftware.com/greenchili/apisecure/userProfileEdit/"+user_id,body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+            
+          });
+    })
+  }
   
   
   

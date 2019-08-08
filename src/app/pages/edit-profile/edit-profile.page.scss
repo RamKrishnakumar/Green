@@ -1,0 +1,39 @@
+.error-message
+ {
+  color: var(--ion-color-warning);
+  font-weight: bold;
+ }
+ .submit-btn
+ {
+   margin-top: 10px;
+  }
+//   ion-button {
+//     --background: var(--ion-color,#32CD32);
+//     --background-focused: var(--ion-color-shade,#32CD32);
+//     --background-hover: var(--ion-color-tint,#47e747);
+//     --color: var(--ion-color-contrast,#fff);
+//     --color-activated: var(--ion-color-contrast,#fff);
+//     --color-focused: var(--ion-color-contrast,#fff);
+// } 
+
+
+.icons {
+    height: 43px;
+    width: 22px;
+    padding-top: 19px;
+}
+    
+.background {
+  background: url(../../../assets/icon/splash.png) no-repeat center center fixed;
+  background-size: cover;
+  width:100%;
+  height:100vh;
+  overflow:auto;
+}
+.rcorners {
+  border-radius: 50px;
+  border: 2px solid #000000;
+}
+.toast-design{
+  text-align: center;
+}

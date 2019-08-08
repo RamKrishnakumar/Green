@@ -17,44 +17,45 @@ export class AppComponent {
     id:'1'
   },
   {
+    title:'User Profile',
+    url:'/profile',
+    icon:'person',
+    id:'2'
+  },
+  {
     title:'Cart',
     url:'/cart',
     icon:'cart',
-    id: '2',
+    id: '3',
   },
   {
     title:'My Orders',
     url:'/myorders',
     icon:'list-box',
-    id:'3'
+    id:'4'
   },
   {
     title:'Online Reservation',
     url:'/online_reservation',
     icon:'cart',
-    id:'4'
+    id:'5'
   },
   {
-    title:'Edit Profile',
-    url:'/edit_profile',
-    icon:'create',
-    id:'5'
-  },{
     title:'About Us',
     url:'/about-us',
     icon:'document',
-    id:'6'
+    id:'7'
   },{
     title:'Logout',
     url:'/login',
     icon:'log-out',
-    id:'7'
+    id:'8'
   },
   {
     title:'Exit',
     role: 'cancel',
     icon:'exit',
-    id:'8'
+    id:'9'
   }
 ];
 

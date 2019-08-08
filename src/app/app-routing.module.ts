@@ -15,6 +15,9 @@ const routes: Routes = [
   { path: 'checkoutpage', loadChildren: './pages/checkoutpage/checkoutpage.module#CheckoutpagePageModule' },
   { path: 'checkout', loadChildren: './pages/checkout/checkout.module#CheckoutPageModule' },
   { path: 'about-us', loadChildren: './pages/about-us/about-us.module#AboutUsPageModule' },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
+  { path: 'online-reservation', loadChildren: './pages/online-reservation/online-reservation.module#OnlineReservationPageModule' },
 
   
 ];

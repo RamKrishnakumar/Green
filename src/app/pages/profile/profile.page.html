@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    <ion-title>User Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div style="text-align: center;border: solid;background-color: black">
+        <img src="assets/icon/logo.png" style="margin-top: 2px;max-width: 80%">
+        <img  src="../../../assets/icon/userplainbackground.png" style="margin-top: 2px;max-width: 25%;">
+        <!-- <p style="color: white">Hello,{{user_details.data.name}}</p> -->
+      </div>
+    <div style="font-weight: bold">
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label>Name</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.name}}</ion-note>
+      </ion-item>
+      <ion-item>
+          <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/envelope.png"></div><ion-label>Email</ion-label>
+          <ion-note slot="end" color="primary">{{this.user_details.data.email}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label>contact NO.</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.contact_no}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/address.png"></div><ion-label>Address</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.address}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/city.png"></div><ion-label>City</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.city}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/address.png"></div><ion-label>ZipCode</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.zipcode}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 46px;width: 24px;padding-top: 20px" src="assets/icon/earth.png"></div><ion-label>Province</ion-label>
+        <ion-note slot="end" color="primary">{{this.user_details.data.province}}</ion-note>
+      </ion-item>
+    </div>
+    <div style="text-align: center">
+        <ion-button color="limegreen" (click)="editProfile()"><ion-icon name="create"></ion-icon>EDIT PROFILE</ion-button>
+    </div>
+
+</ion-content>

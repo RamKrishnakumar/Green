@@ -20,7 +20,7 @@ errorMessage:string='';
 
 validation_messages= {
   'email': [
-    {type: 'required',message:'Username is required'},
+    {type: 'required',message:'Email is required'},
     {type: 'pattern', message: 'Enter valid email/10digit mobile no. format'}
   ],
   'password':[
@@ -112,7 +112,7 @@ async invalid() {
 async errorAlert() {
   const alert = await this.alertController.create({
     header: 'Alert',
-    message: 'please try again',
+    message: 'please try after sometime, network error',
     buttons: ['OK'],
     cssClass: "toast-design"
   });

@@ -285,15 +285,9 @@ export class HomePage {
     //your_user_id;
     return new Promise((resolve,reject) => {
       var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
+            });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
           this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.user_id,requestOptions).subscribe(res => {
