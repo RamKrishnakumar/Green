@@ -36,7 +36,7 @@ export class AppComponent {
   },
   {
     title:'Online Reservation',
-    url:'/online_reservation',
+    url:'/online-reservation',
     icon:'cart',
     id:'5'
   },

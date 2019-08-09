@@ -6,6 +6,9 @@ import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { resolve } from 'dns';
+import { reject } from 'q';
+import { headersToString } from 'selenium-webdriver/http';
 
 
 //let apiUrl = "http://wiesoftware.com/greenchili/apisecure/login/";
@@ -173,7 +176,22 @@ export class AuthService {
             reject(err);
             
           });
-    })
+    });
+  }
+
+  OnlineReservation(body){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+        'content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      });
+      const requestOptions = new RequestOptions({headers: headers});
+      this.https.post("http://wiesoftware.com/greenchili/apisecure/onlineReservation",body, requestOptions).subscribe(res =>{
+        resolve(res.json());
+      }, (err) => {
+        reject(err);
+      });
+    });
   }
   
   

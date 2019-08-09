@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController,AlertController } from '@ionic/angular';
+import { ToastController,AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs';
@@ -37,7 +37,8 @@ constructor(private formBuilder: FormBuilder,
             private toastController: ToastController,
             public authService: AuthService,
             public http: Http,
-            public alertController: AlertController
+            public alertController: AlertController,
+            public loadingController:LoadingController
               ) { }
 
 
@@ -172,25 +173,44 @@ SignUp(){
   // }
 
   public error: any;
-  tryLogin(){
+
+  // async detailsfetch($langselect) {
+  //   const loading = await this.loadingController.create({
+  //     message: 'Please Wait',
+  //     translucent: true,
+  //   });
+  //   await loading.present();
+  //   this.chakapi.getdetails($langselect).subscribe(data => {
+  //     this.detu = data;
+  //     this.newda = this.detu.data;
+  //     loading.dismiss();
+  //   }, error => { loading.dismiss(); });
+
+  // }
+
+  async tryLogin(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+    });
+  await loading.present();
    let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
    this.authService.UserLogin(body).then((result) => {
       this.validate_response = result;
       if(this.validate_response.status==false){
           this.invalid();
           this.validations_form.reset();
+          loading.dismiss();
         }
        else if(this.validate_response.status==true){
           this.validations_form.reset(); 
-         window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
+         window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id)); 
+         loading.dismiss();        
          this.router.navigate(['home']);
          this.loginsuccess();
-         
-         
          }
     }, (err) => {
-      //this.presentToast();
-      this.error= err;
+      loading.dismiss();
       this.errorAlert();
 
     });;

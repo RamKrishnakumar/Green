@@ -1,9 +1,135 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>online-reservation</ion-title>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    <ion-title>Online Reservation System</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
+  <div style="text-align: center;background-color: black">
+    <img src="assets/icon/logo.png" style="margin-top: 2px;max-width: 80%;">
+  </div>
+  <ion-item style="border-style: solid; margin: 6px 5px 0px 5px; border-radius: 4px; cursor: pointer;" (click)="showBasicPicker()" >
+   <!-- <ion-input type="text" placeholder="Select Location">{{location}}</ion-input>  -->
+   <ion-label color="primary" style="text-align: center"> {{location}}</ion-label>
+   <ion-button slot="end" fill="clear"><ion-icon name="arrow-down"></ion-icon>Select</ion-button>
+  </ion-item>
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="onlineReservation(validations_form.value)" style="padding-top:2%;">
+      <div style="padding: 10px">
+          <ion-item class="item-style" >
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label position="floating" color="primary">First Name<p style="color: red;float:left">*</p></ion-label>
+            <ion-input type="text" formControlName="f_name" ></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.f_name">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('f_name').hasError(validation.type) && (validations_form.get('f_name').dirty || validations_form.get('f_name').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
 
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label position="floating" color="primary">Last Name<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="l_name"></ion-input> 
+            </ion-item>
+            <div class="validation-error">
+            <ng-container *ngFor="let validation of validation_messages.l_name">
+              <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('l_name').hasError(validation.type) && (validations_form.get('l_name').dirty || validations_form.get('l_name').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+              </div>
+            </ng-container>
+            </div>
+          
+          <ion-item class="item-style" >
+            <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/envelope.png"></div><ion-label position="floating" color="primary">Email<p style="color: red;float:left">*</p></ion-label>
+            <ion-input type="text" formControlName="email" ></ion-input>
+          </ion-item>
+          <div class="validation-error">
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+          
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Mobile<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="contact_no" ></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.contact_no">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('contact_no').hasError(validation.type) && (validations_form.get('contact_no').dirty || validations_form.get('contact_no').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/seats.png"></div><ion-label position="floating" color="primary">No. of Seat<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="seats" ></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.seats">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('seats').hasError(validation.type) && (validations_form.get('seats').dirty || validations_form.get('seats').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/address.png"></div><ion-label position="floating" color="primary">Address<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="address" ></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.address">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('address').hasError(validation.type) && (validations_form.get('address').dirty || validations_form.get('address').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/address.png"></div><ion-label position="floating" color="primary">Zipcode<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="zipcode" ></ion-input> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.zipcode">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('zipcode').hasError(validation.type) && (validations_form.get('zipcode').dirty || validations_form.get('zipcode').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/earth.png"></div><ion-label position="floating" color="primary">Province<p style="color: red;float:left">*</p></ion-label>
+              <ion-input type="text" formControlName="province" ></ion-input> 
+          </ion-item>
+            <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.province">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('province').hasError(validation.type) && (validations_form.get('province').dirty || validations_form.get('province').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+
+          <ion-item class="item-style" >
+              <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/info.png"></div><ion-label position="floating" color="primary">Additional Information<p style="color: red;float:left">*</p></ion-label>
+              <!-- <ion-input type="text" formControlName="info"></ion-input> -->
+              <ion-textarea formControlName="info"></ion-textarea> 
+          </ion-item>
+          <div class="validation-error">
+          <ng-container *ngFor="let validation of validation_messages.info">
+            <div style="font-size: 13px" class="error-message" *ngIf="validations_form.get('info').hasError(validation.type) && (validations_form.get('info').dirty || validations_form.get('info').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </div>
+          </ng-container>
+          </div>
+          <label class="error-message">{{errorMessage}}</label>
+          <div>
+            <ion-button  color="limegreen" class="submit-btn" expand="block" type="submit" [disabled]="!validations_form.valid" >Book Now</ion-button>
+          </div>             
+      </div>
+    </form>
 </ion-content>
