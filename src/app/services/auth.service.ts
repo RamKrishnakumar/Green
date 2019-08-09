@@ -6,9 +6,6 @@ import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { resolve } from 'dns';
-import { reject } from 'q';
-import { headersToString } from 'selenium-webdriver/http';
 
 
 //let apiUrl = "http://wiesoftware.com/greenchili/apisecure/login/";
@@ -28,9 +25,9 @@ export class AuthService {
 
   
 
-  constructor(public https: Http, 
+  constructor(public http: Http, 
               public alertController: AlertController,
-              private http: HttpClient,
+              private https: HttpClient,
                ) { }
 
                async successResponse() {
@@ -90,7 +87,7 @@ export class AuthService {
             
           });
           const requestOptions = new RequestOptions({ headers: headers });
-          this.https.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers/", body,requestOptions).subscribe(res => {
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers/", body,requestOptions).subscribe(res => {
            resolve(res.json());
            this.response= res.json(); 
            //this.test_body= body;
@@ -105,7 +102,7 @@ export class AuthService {
   }
   
   Login(body): Observable<any> {
-    return this.http.post<any>('http://wiesoftware.com/greenchili/apisecure/login/loginUsers/',body).pipe(tap(_ => this.log('login')),
+    return this.https.post<any>('http://wiesoftware.com/greenchili/apisecure/login/loginUsers/',body).pipe(tap(_ => this.log('login')),
     catchError(this.handleError('login', []))
     );
 
@@ -130,20 +127,20 @@ export class AuthService {
   }
   
 
-  signUp(body) {
-    //let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.mobilenumber + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode' + this.validations_form.value.zipcode + '&remark='+ "" + '&password=' + this.validations_form.value.enterpassword ;
-    var headers = new Headers({
-      //'X-API-KEY': '123run',
-      'Content-Type': 'application/x-www-form-urlencoded',
-     // 'Access-Control-Allow-Origin' : '*'
-      'Accept': 'application/json'
+  SignUp(body) {
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/registerUsers", body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);            
+          });
     });
-    const requestOptions = new RequestOptions({ headers: headers });
-    this.http.post("http://localhost/greenchili/login-signin", body).subscribe(res => {
-        console.log(res['_body']);
-       }, error => {
-        console.log(error);
-      });
   }
 
   UserDetails(user_id){
@@ -154,7 +151,7 @@ export class AuthService {
             });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.https.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+user_id,requestOptions).subscribe(res => {
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+user_id,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -170,7 +167,7 @@ export class AuthService {
             });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.https.post("http://wiesoftware.com/greenchili/apisecure/userProfileEdit/"+user_id,body,requestOptions).subscribe(res => {
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/userProfileEdit/"+user_id,body,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -186,12 +183,124 @@ export class AuthService {
         'Accept': 'application/json'
       });
       const requestOptions = new RequestOptions({headers: headers});
-      this.https.post("http://wiesoftware.com/greenchili/apisecure/onlineReservation",body, requestOptions).subscribe(res =>{
+      this.http.post("http://wiesoftware.com/greenchili/apisecure/onlineReservation",body, requestOptions).subscribe(res =>{
         resolve(res.json());
       }, (err) => {
         reject(err);
       });
     });
+  }
+
+  ResetPwd(body){
+    return new Promise((resolve,reject) => {      
+      var headers = new Headers({
+            
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',                      
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/forgetPassword", body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
+  }
+
+  LocationData(){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            //'Access-Control-Allow-Methods': 'POST',
+            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
+  }
+
+  LocationList(id){
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          
+          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/"+ id,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
+  }
+
+  DishList(location_id,id){
+    return new Promise((resolve,reject) => {
+      
+      var headers = new Headers({
+            //'X-API-KEY': '123run',
+            //"Authorization": 'Basic',
+            //'username': 'devpankaj',
+            //'password': 'devpankaj',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          this.http.get(" http://greenchili.ca/apisecure/location/locationMenuDishes/"+location_id+"/"+id ,requestOptions).subscribe(res => {
+          resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
+  }
+
+  ViewDish(id){
+    return new Promise((resolve,reject) => {
+      var headers = new Headers({          
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',       
+            });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get("http://greenchili.ca/apisecure/location/locationDishDetails/"+id,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
+  }
+
+  PlaceOrder(body){
+    return new Promise((resolve,reject) => {              
+      var headers = new Headers({
+            //"Authorization": 'Basic',
+            //"username": 'devpankaj',
+            //"password": 'devpankaj',
+            //"X-API-KEY": '123run',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',            
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.post(" http://wiesoftware.com/greenchili/apisecure/payment/paymentBilling", body,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
   }
   
   

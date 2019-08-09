@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Http,Headers, RequestOptions } from '@angular/http';
-import { ToastController,AlertController, PopoverController } from '@ionic/angular';
+import { ToastController,AlertController, PopoverController, LoadingController } from '@ionic/angular';
 import 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dishslist',
@@ -24,7 +25,9 @@ export class DishslistPage implements OnInit {
               public http: Http,
               public toastController: ToastController,
               public alertController: AlertController,
-              public popoverController:PopoverController
+              public popoverController:PopoverController,
+              private authService: AuthService,
+              public loadingController: LoadingController
               ) {
   this.set_response = JSON.parse(window.localStorage.getItem('menuKey'));
   }
@@ -32,18 +35,6 @@ export class DishslistPage implements OnInit {
     this.dishData = this.set_response.menu_list.data;
     this.dish_image=this.set_response.menu_list.image_link
   }
- //......................Toast Controller  for showing the response of servie when we hit API...........................
- async presentToast() {
-  const toast = await this.toastController.create({
-    message: 'Connection Failed',
-    color: "danger",
-    duration: 2000, 
-    position: "top",
-    cssClass: "toast-design"   
-  });
-  toast.present();
-}
-//......................End...........................................................................................
 
 //----------------------Alert Controllers--------------------------------------------------------------------------------
 //.................Invalid Credentials Alert............................................................................
@@ -57,53 +48,50 @@ async invalid() {
 
   await alert.present();
 }
+
+async errorAlert() {
+  const alert = await this.alertController.create({
+    header: 'Alert',
+    message: 'please try after sometime, network error',
+    buttons: ['OK'],
+    cssClass: "toast-design"
+  });
+
+  await alert.present();
+
+}
 //.................Invalid Credentials Alert............................................................................
 //----------------------End of Alert Controllers--------------------------------------------------------------------------
 
 dish_details:any;
 dish_detail:any;
-viewDish(id){
-    return new Promise((resolve,reject) => {
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://greenchili.ca/apisecure/location/locationDishDetails/"+id,requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-          });
-    }).then((result) => {
+async viewDish(id){
+  const loading= await this.loadingController.create({
+    message: 'Please Wait',
+    translucent: true,
+    spinner: "crescent"
+  });
+  await loading.present();
+    this.authService.ViewDish(id).then((result) => {
       this.dish_details = result;
       if(this.dish_details.status==false){
         this.invalid();
+        loading.dismiss();
       }
       else if(this.dish_details.status==true){
         window.localStorage.setItem('selectedProduct', JSON.stringify(this.dish_details));
-        this.router.navigate(['\dishview']);
+        this.router.navigate(['dishview']);
+        loading.dismiss();
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
   goToCart(){
-    this.router.navigate(['\cart']);
+    this.router.navigate(['cart']);
   }
-
-
-  
-  // goBack(){  
-  //   this.router.navigate(['\location-menu']);
-  // }
  
 
 }

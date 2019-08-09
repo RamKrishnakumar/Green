@@ -4,6 +4,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { AlertController} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal/ngx';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class CheckoutPage implements OnInit {
               public http: Http,
               public alertController: AlertController,
               public router: Router,
-              private payPal: PayPal) { 
+              private payPal: PayPal,
+              public authService: AuthService) { 
     this.customerId = JSON.parse(window.localStorage.getItem('userKey'));
     this.customerName = JSON.parse(window.localStorage.getItem('usernameKey'));
     this.payment_method = JSON.parse(window.localStorage.getItem('paymethodKey'));
@@ -79,30 +81,11 @@ export class CheckoutPage implements OnInit {
 
   placeOrder(){
     if(this.payment_method==2 || this.payment_method==3){
-      return new Promise((resolve,reject) => {
-        
-        var headers = new Headers({
-              //"Authorization": 'Basic',
-              //"username": 'devpankaj',
-              //"password": 'devpankaj',
-              //"X-API-KEY": '123run',
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json',
-              'Access-Control-Allow-Methods': 'POST',
-            'Access-Control-Allow-Origin':'*'  
-            });
-            const requestOptions = new RequestOptions({ headers: headers });
-            //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-            this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.customerId,requestOptions).subscribe(res => {
-             resolve(res.json());
-             },(err) => {
-              reject(err);
-            });
-      }).then((result) => {
+     this.authService.UserDetails(this.customerId).then((result) => {
         this.user_details = result;
         console.log(this.user_details);
         if(this.user_details.data.address == null && this.user_details.data.province == null && this.user_details.data.city == null && this.user_details.data.zipcode == null ){
-          this.router.navigate(['\editprofile']);
+          this.router.navigate(['editprofile']);
         }
         else{
           this.cartserviceService.getCartItems()
@@ -114,34 +97,11 @@ export class CheckoutPage implements OnInit {
               this.array1[b] = this.cartItem[b].pro_name;
               this.array2[b]= this.cartItem[b].qty;
               this.array3[b]= this.cartItem[b].price;
-            }
-            
+            }            
             if(this.cartItem.length >0 ){
-              return new Promise((resolve,reject) => {
-                let qty = this.cartItems.forEach((v,idx) => {v.pro_id});
-                let body = 'payment_method=' + this.payment_method +'&email=' + this.user_details.data.email + '&name=' + this.user_details.data.name + '&contact_no=' + this.user_details.data.contact_no + '&remark=' + this.user_details.data.remark + '&province=' + this.user_details.data.province + '&city=' + this.user_details.data.city + '&zipcode=' + this.user_details.data.zipcode + '&address=' + this.user_details.data.address + '&users_id=' + this.user_details.data.users_id + '&total_price=' + this.total_price + '&pro_id=' + this.array + '&pro_name=' + this.array1 + '&qty=' + this.array2 + '&price=' +this.array3;
-                
-                console.log(body);
-                var headers = new Headers({
-                      //"Authorization": 'Basic',
-                      //"username": 'devpankaj',
-                      //"password": 'devpankaj',
-                      //"X-API-KEY": '123run',
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                      'Accept': 'application/json',
-                      'Access-Control-Allow-Methods': 'POST',
-                      'Access-Control-Allow-Origin':'*'
-                      
-                    });
-                    const requestOptions = new RequestOptions({ headers: headers });
-                    //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-                    this.http.post(" http://wiesoftware.com/greenchili/apisecure/payment/paymentBilling", body,requestOptions).subscribe(res => {
-                     resolve(res.json());
-                     },(err) => {
-                      reject(err);
-
-                    });
-              }).then((result) => {
+              let qty = this.cartItems.forEach((v,idx) => {v.pro_id});
+              let body = 'payment_method=' + this.payment_method +'&email=' + this.user_details.data.email + '&name=' + this.user_details.data.name + '&contact_no=' + this.user_details.data.contact_no + '&remark=' + this.user_details.data.remark + '&province=' + this.user_details.data.province + '&city=' + this.user_details.data.city + '&zipcode=' + this.user_details.data.zipcode + '&address=' + this.user_details.data.address + '&users_id=' + this.user_details.data.users_id + '&total_price=' + this.total_price + '&pro_id=' + this.array + '&pro_name=' + this.array1 + '&qty=' + this.array2 + '&price=' +this.array3;
+              this.authService.PlaceOrder(body).then((result) => {
                 this.order_response = result;
                 if(this.order_response==true)
                {
@@ -149,7 +109,7 @@ export class CheckoutPage implements OnInit {
                 this.cartserviceService.removeAllCartItems().then(val => {
                   return val;
                 }).catch(err => {});
-                this.router.navigate(['\myorders']);
+                this.router.navigate(['myorders']);
                }                
               }, (err) => {
                 console.log('something went wrong in placing your  order!');
@@ -165,28 +125,11 @@ export class CheckoutPage implements OnInit {
       });;
     }
     else if(this.payment_method==1){
-      return new Promise((resolve,reject) => {
-        var headers = new Headers({
-          //"Authorization": 'Basic',
-          //"username": 'devpankaj',
-          //"password": 'devpankaj',
-          //"X-API-KEY": '123run',
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json',
-              'Access-Control-Allow-Methods': 'POST',
-              'Access-Control-Allow-Origin': '*'
-        });
-        const requestOptions = new RequestOptions ({headers:headers});
-        this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.customerId,requestOptions).subscribe(res => {
-          resolve(res.json());
-        }, (err) => {
-          reject(err);
-        });
-      }).then ( (result) => {
+    this.authService.UserDetails(this.customerId).then ( (result) => {
         this.user_details = result;
         console.log(this.user_details);
         if(this.user_details.data.address == null && this.user_details.data.province == null && this.user_details.data.city == null && this.user_details.data.zipcode == null ){
-          this.router.navigate(['\editprofile']);
+          this.router.navigate(['editprofile']);
         }
         else{
           this.paymentAmount=this.total_price;
@@ -240,17 +183,4 @@ export class CheckoutPage implements OnInit {
 
 
   }
-  // this.cartserviceService.getCartItems().then((val) => {
-  //   this.cartItem=val;
-  //   var b;
-  //   for(b in this.cartItem){
-  //     this.array[b] = this.cartItem[b].pro_id;
-  //     this.array1[b] = this.cartItem[b].pro_name;
-  //     this.array2[b]= this.cartItem[b].qty;
-  //     this.array3[b]= this.cartItem[b].price;
-  //   }
-    
-  // }).catch(err =>{
-  //   console.log(err);
-  // });
 }

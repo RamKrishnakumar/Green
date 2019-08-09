@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController,AlertController } from '@ionic/angular';
+import { ToastController,AlertController, LoadingController } from '@ionic/angular';
 import { PasswordValidator } from '../../validators/password.validator';
-import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -40,6 +39,7 @@ export class SignupPage implements OnInit {
     ],
     'zipcode' : [
       {type: 'required', message:'ZipCode is required!'},
+      {type: 'patten', message: 'Enter a Valid Zipcode!'}
     ],
     'remark' : [
       {type: 'required', message:'Remarks is required'},
@@ -60,9 +60,9 @@ export class SignupPage implements OnInit {
                private formBuilder: FormBuilder,
               private router: Router,
               private toastController: ToastController,
-              public http: Http,
               public authService: AuthService,
-              public alertController: AlertController
+              public alertController: AlertController,
+              public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -110,36 +110,26 @@ export class SignupPage implements OnInit {
   }
 
   login(){
-    this.router.navigate(['\login']);
+    this.router.navigate(['login']);
   }
-//-------------------------ToastControllers--------------------------------------
-  //---Toast appered when connection with api failed-------------------
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Connection Failed',
-      color: "danger",
-      duration: 2000
-    });
-    toast.present();
-  }
-//---------api conection failded toast ends here--------------------------------------------------------------------------------------------------------------
-//----------------Successful SignUp Toast---------------------------------------------------------------------------------------
-async signUpsuccess() {
-  const toast = await this.toastController.create({
-    //header: " Hello, " + this.validate_response.data.name,
-    message: this.validate_response.message,
-    color: "dark",
-    duration: 3000,
-    position:"top",
-    cssClass: "toast"
-  });
-  toast.present();
-}
-//---------------Successful SignUp Toast Ends here------------------------------------------------------------------------------
-//------------------------Toastcontroller ends here-----------------------------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------------------------------------------------
 //---------------Alert appeares when email or mobile no. already existed in database------------------------------------
+//----------------Successful SignUp Alert---------------------------------------------------------------------------------------
+
+
+async signUpsuccess() {
+  const alert = await this.alertController.create({
+    header: 'Alert',
+    message: this.validate_response.message,
+    buttons: ['OK'],
+    cssClass: "alert-design"
+  });
+
+  await alert.present();
+}
+//---------------Successful SignUp Alert Ends here------------------------------------------------------------------------------
+
+
 async overrideAlert() {
   const alert = await this.alertController.create({
     header: 'Alert',
@@ -150,45 +140,47 @@ async overrideAlert() {
 
   await alert.present();
 }
+
+async errorAlert() {
+  const alert = await this.alertController.create({
+    header: 'Alert',
+    message: 'please try after sometime, network error',
+    buttons: ['OK'],
+    cssClass: "toast-design"
+  });
+
+  await alert.present();
+
+}
 //----------------------------------------------------------------------------------------------------------------------
 
 
 //login page submit button working function-------------------------------------------------------------------------------------------
   validate_response: any;
-  signUp(){
-    return new Promise((resolve,reject) => {
-      let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.contact_no + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode=' + this.validations_form.value.zipcode + '&remark='+ this.validations_form.value.remark + '&password=' + this.matching_passwords_group.value.password ;
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.post("http://wiesoftware.com/greenchili/apisecure/login/registerUsers", body,requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            
-          });
-    }).then((result) => {
+  async signUp(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+    });
+    await loading.present();
+    let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.contact_no + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode=' + this.validations_form.value.zipcode + '&remark='+ this.validations_form.value.remark + '&password=' + this.matching_passwords_group.value.password ;
+    this.authService.SignUp(body).then((result) => {
       this.validate_response = result;
       if(this.validate_response.status==false){
         this.validations_form.reset();
         this.overrideAlert();
+        loading.dismiss();
       }
       else if(this.validate_response.status==true){
         this.signUpsuccess();
         this.validations_form.reset();
-        this.router.navigate(['\login']);
+        loading.dismiss();
+        this.router.navigate(['login']);
+
       }
     }, (err) => {
-      this.presentToast();
+      loading.dismiss();
+      this.errorAlert();
     });;
   }
   //-------------SignUp page login button funtion ends here----------------------------------------------- 

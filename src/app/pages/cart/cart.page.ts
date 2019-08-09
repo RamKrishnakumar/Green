@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartserviceService } from '../../services/cartservice.service';
-import { ToastController, AlertController, PickerController, LoadingController } from '@ionic/angular';
+import { ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { CheckoutPage } from '../checkout/checkout.page';
 
 //import { PickerOptions, loadingController } from '@ionic/core';
@@ -17,7 +17,7 @@ import { Storage } from '@ionic/storage';
 export class CartPage implements OnInit {
 
   public backPages =[
-    {url: '/location-menu'}];
+    {url: '/home'}];
 
 
   //Get value on ionChange on IonRadioGroup
@@ -91,8 +91,13 @@ export class CartPage implements OnInit {
     }
 
 
-   loadCartItems(){
-     
+   async loadCartItems(){
+     const loading = await this.loadingController.create({
+       message: 'Please Wait',
+       translucent: true,
+       spinner: "bubbles"
+     });
+     await loading.present();
      this.cartserviceService.getCartItems()
      .then((val) => {
        this.cartItem = val;
@@ -103,32 +108,50 @@ export class CartPage implements OnInit {
            this.totalAmount += parseInt(v.totalPrice);
            });
        this.isEmptyCart=true;
+       loading.dismiss();
        }
        else{
         this.isEmptyCart=false;
+        loading.dismiss();
         }
      })
      .catch(err => {
        console.log(err);
+       loading.dismiss();
      });
    }
 
-   removeItem(itm){
+   async removeItem(itm){
+     const loading = await this.loadingController.create({
+       message:'deleting',
+       translucent: true,
+       spinner: "bubbles"
+     });
+     await loading.present();
      this.cartserviceService.removeFromCart(itm).then(() => {
        this.loadCartItems();
        this.totalAmount -= this.totalAmount;
+       loading.dismiss();
        
      });
    }
 
-   checkOut(){
+   async checkOut(){
+     const loading= await this.loadingController.create({
+       message:'Please Wait',
+       translucent: true,
+       spinner: "crescent"
+     });
+     await loading.present();
      var userId= this.user_id;
      if(userId !==null){
-       this.router.navigate(['\checkout']);
+       this.router.navigate(['checkout']);
        console.log(this.selectedRadioItem);
+       loading.dismiss();
      }
      else{
-       this.router.navigate(['\login']);
+       this.router.navigate(['login']);
+       loading.dismiss();
      }
    }
 

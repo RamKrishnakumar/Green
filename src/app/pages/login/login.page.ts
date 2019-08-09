@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController,AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Http, Headers, RequestOptions } from '@angular/http';
-import 'rxjs';
+
 
 
 
@@ -36,7 +35,6 @@ constructor(private formBuilder: FormBuilder,
             private router: Router,
             private toastController: ToastController,
             public authService: AuthService,
-            public http: Http,
             public alertController: AlertController,
             public loadingController:LoadingController
               ) { }
@@ -70,17 +68,6 @@ constructor(private formBuilder: FormBuilder,
     toast.present();
   }
   //......................End...........................................................................................
-
-  // async Invalid() {
-  //   const toast = await this.toastController.create({
-  //     color: "dark",
-  //     header: this.validate_response.message,
-  //     message: "Please try again",
-  //     duration: 3000,
-  //     position:"top"
-  //   });
-  //   toast.present();
-  // }
 //..................loginSuccess Toaster.................................................................................
   async loginsuccess() {
     const toast = await this.toastController.create({
@@ -173,21 +160,6 @@ SignUp(){
   // }
 
   public error: any;
-
-  // async detailsfetch($langselect) {
-  //   const loading = await this.loadingController.create({
-  //     message: 'Please Wait',
-  //     translucent: true,
-  //   });
-  //   await loading.present();
-  //   this.chakapi.getdetails($langselect).subscribe(data => {
-  //     this.detu = data;
-  //     this.newda = this.detu.data;
-  //     loading.dismiss();
-  //   }, error => { loading.dismiss(); });
-
-  // }
-
   async tryLogin(){
     const loading = await this.loadingController.create({
       message: 'Please Wait',
@@ -212,30 +184,10 @@ SignUp(){
     }, (err) => {
       loading.dismiss();
       this.errorAlert();
+      this.validations_form.reset();
 
     });;
   }
-
-  // tryLogin(){
-  //   let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
-  //   this.authService.Login(body).subscribe(res => {
-  //     this.validate_response = res;
-  //         if(this.validate_response.status==false){
-  //         this.invalid();
-  //         this.validations_form.reset();
-  //         console.log(this.validations_form.value.email);
-  //       }
-  //      else if(this.validate_response.status==true){
-  //         this.validations_form.reset(); 
-  //        window.localStorage.setItem('userKey', JSON.stringify(this.validate_response.data.users_id));         
-  //        this.router.navigate(['\home']);
-  //        this.loginsuccess();
-  //        }
-  //   },(err) =>{
-  //     console.log(err);
-  //     this.presentToast();
-  //   }) 
-  // }
 //----------------------------------------------------------------------------------------------------------------------- 
 // Login Button function Ends here---------------------------------------------------------------------------------------
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {ToastController, AlertController} from '@ionic/angular';
+import {ToastController, AlertController, LoadingController} from '@ionic/angular';
 import {Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs'
+import { AuthService } from '../services/auth.service';
 
 
 
@@ -13,11 +14,18 @@ import 'rxjs'
 })
 export class HomePage {
 
+  location_id1: number=1;
+  location_id2: number=2;
+  location_id3: number=3;
+  location_id4: number=4;
+  location_id5: number=5;
   user_id:any;
   user_details:any;
   constructor(public router:Router,
               public toastController: ToastController,
               public alertController: AlertController,
+              public authService: AuthService,
+              public loadingController: LoadingController,
               public http: Http) {
   
   //this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
@@ -31,21 +39,38 @@ export class HomePage {
     console.log(this.user_id);
     this.locationData();
     this.userDetails();
+    console.log(this.location_response);
+    console.log(this.location_id1);
     
     
   }
 
   //----------------------------------------------------------------------------------------------------------------------
   //......................Toast Controller  for showing the response of servie when we hit API...........................
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Failed to get api response',
-      color: "danger",
-      duration: 2000, 
-      position: "top",
-      cssClass: "toast-design"   
+ 
+  async errorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: 'please try after sometime, network error',
+      buttons: ['OK'],
+      cssClass: "toast-design"
     });
-    toast.present();
+  
+    await alert.present();
+  
+  }
+
+  async usernotLogin() {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: 'No user Logged in!',
+      message: 'Login First!',
+      buttons: ['OK'],
+      cssClass: "toast-design"
+    });
+  
+    await alert.present();
+  
   }
   //......................End...........................................................................................
   
@@ -64,252 +89,184 @@ export class HomePage {
   //----------------------------------------------------------------------------------------------------------------------
 
   logout(){
-    this.router.navigate(['\login']);
+    this.router.navigate(['login']);
   }
   public aveswgreen_response:any;
   public all_response:any;
   
-  aveswGreen(){
-    return new Promise((resolve,reject) => {
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/1",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async aveswGreen(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "crescent"
+    });
+    await loading.present();
+    this.authService.LocationList(this.location_id1).then((result) => {
       this.aveswgreen_response = result;
       if(this.aveswgreen_response.status==false){
         this.falseStatus();
+        loading.dismiss();
       }
       else if(this.aveswgreen_response.status==true){
         
         this.all_response= {"location": this.location_response.data[0],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        this.router.navigate(['\location-menu']);
+        this.router.navigate(['location-menu']);
+        loading.dismiss();
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
-  waldenGreen(){
-    return new Promise((resolve,reject) => {
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/2",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async waldenGreen(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "crescent"
+    })
+    await loading.present();
+    this.authService.LocationList(this.location_id2).then((result) => {
       this.aveswgreen_response = result;
       if(this.aveswgreen_response.status==false){
         this.falseStatus();
+        loading.dismiss();
       }
       else if(this.aveswgreen_response.status==true){
         
         this.all_response= {"location": this.location_response.data[1],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        this.router.navigate(['\location-menu']);
+        loading.dismiss();
+        this.router.navigate(['location-menu']);
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
-  crowchildGreen(){
-    return new Promise((resolve,reject) => {
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/3",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async crowchildGreen(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "crescent"
+    });
+    await loading.present();
+    this.authService.LocationList(this.location_id3).then((result) => {
       this.aveswgreen_response = result;
       if(this.aveswgreen_response.status==false){
+        loading.dismiss();
         this.falseStatus();
       }
       else if(this.aveswgreen_response.status==true){
         
         this.all_response= {"location": this.location_response.data[2],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        this.router.navigate(['\location-menu']);
+        this.router.navigate(['location-menu']);
+        loading.dismiss();
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
-  crowfootGreen(){
-    return new Promise((resolve,reject) => {
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/4",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async crowfootGreen(){
+    const loading= await this.loadingController.create({
+      message: 'Please wait',
+      translucent: true,
+      spinner: "crescent"
+    });
+    await loading.present();
+    this.authService.LocationList(this.location_id4).then((result) => {
       this.aveswgreen_response = result;
       if(this.aveswgreen_response.status==false){
         this.falseStatus();
+        loading.dismiss();
       }
       else if(this.aveswgreen_response.status==true){
         
         this.all_response= {"location": this.location_response.data[3],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        this.router.navigate(['\location-menu']);
+        this.router.navigate(['location-menu']);
+        loading.dismiss();
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
-  nolanGreen(){
-    return new Promise((resolve,reject) => {
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/5",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async nolanGreen(){
+    const loading= await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "crescent"
+    });
+    await loading.present();
+   this.authService.LocationList(this.location_id5).then((result) => {
       this.aveswgreen_response = result;
       if(this.aveswgreen_response.status==false){
         this.falseStatus();
+        loading.dismiss();
       }
       else if(this.aveswgreen_response.status==true){
         
         this.all_response= {"location": this.location_response.data[4],"location_menu":this.aveswgreen_response};
         window.localStorage.setItem('key', JSON.stringify(this.all_response));
-        this.router.navigate(['\location-menu']);
+        this.router.navigate(['location-menu']);
+        loading.dismiss();
       }
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
 
-  locationData(){
-    return new Promise((resolve,reject) => {
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            //'Access-Control-Allow-Methods': 'POST',
-            
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-          });
-    }).then((result) => {
+  async locationData(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "bubbles"
+    });
+  await loading.present();
+    this.authService.LocationData().then((result) => {
       this.location_response = result;
+      loading.dismiss();
       window.localStorage.setItem('locationKey',JSON.stringify(this.location_response));
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
+ 
+  
+
   user_name:any;
-  userDetails(){
-    //your_user_id;
-    return new Promise((resolve,reject) => {
-      var headers = new Headers({
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-            });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://wiesoftware.com/greenchili/apisecure/userDetails/"+this.user_id,requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-            this.presentToast();
-          });
-    }).then((result) => {
+  async userDetails(){
+    const loading = await this.loadingController.create({
+      message: 'Please Wait',
+      translucent: true,
+      spinner: "bubbles"
+    });
+    await loading.present();
+    this.authService.UserDetails(this.user_id).then((result) => {
       this.user_details= result;
-      console.log(this.user_details);
       if(this.user_details.status==false)
       {
-       console.log('no user logged in');  
+       this.usernotLogin();
+       loading.dismiss();
       }
       else if(this.user_details.status==true){
     this.user_name=this.user_details.data.name;
     window.localStorage.setItem('usernameKey', JSON.stringify(this.user_name));    
+    loading.dismiss();
     }
 
     }, (err) => {
-      this.presentToast();
+      this.errorAlert();
+      loading.dismiss();
     });;
   }
   async invalid() {

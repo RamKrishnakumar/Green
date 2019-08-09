@@ -6,6 +6,8 @@
 .title_div{
     font-size: 6vw;
     font-weight: bold;
+    color: red;
+    margin-left: 2vw;
 }
 .price_div{
     max-width: 40vw;
@@ -29,7 +31,7 @@
     font-weight: bold;
     margin: 2vw;
     font-size: 5vw;
-    color: darkslategray;
+    color: limegreen;
     //float: left;
 }
 .description-div2{
@@ -43,13 +45,13 @@
     font-size: 4vw;
 }
 .restraunt-timing-div{
-    float: left;color: white;
+    float: left;color: black;
     text-align: center;
     background-color: limegreen;
     width: 100%;
     border-style: solid;
     border-width: thick;
-    border-color: white;
+    border-color: black;
     font-size: 4vw;
 }
 .qty {

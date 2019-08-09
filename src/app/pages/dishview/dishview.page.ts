@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartserviceService } from '../../services/cartservice.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,6 +25,7 @@ export class DishviewPage implements OnInit {
   
     constructor(public cartserviceService: CartserviceService,
                 public alertController: AlertController,
+                public loadingController: LoadingController,
                 public router: Router) { }
   
   ngOnInit() {
@@ -32,10 +33,9 @@ export class DishviewPage implements OnInit {
   this.restaurent_timing= this.product.restaurent_time_list;
   this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
   this.user_name = JSON.parse(window.localStorage.getItem('usernameKey'));
-  console.log(this.product);
   this.cartserviceService.getCartItems().then((val) => {
   this.cartItems = val;
-  })
+  });
   
   }
 
@@ -66,7 +66,13 @@ export class DishviewPage implements OnInit {
    
   }
 
-  addToCart(){
+  async addToCart(){
+    const loading= await this.loadingController.create({
+      message:'Please Wait',
+      translucent: true,
+      spinner: "bubbles"
+    });
+    await loading.present();
     var productPrice = this.productCount * parseInt(this.product.data.main_price);
     let cartProduct = {
       pro_id: this.product.data.id,
@@ -82,6 +88,7 @@ export class DishviewPage implements OnInit {
       this.successAdd();
       this.hideme= false;
       this.unhideme = true;
+      loading.dismiss();
     });
   }
 
