@@ -166,13 +166,13 @@ export class CheckoutPage implements OnInit {
             //   }
             // }
           }, () => {
-            // Error or render dialog closed without being successful
+            console.error('Error or render dialog closed without being successful');
           });
         }, () => {
-          // Error in configuration
+          console.error('Error in configuration');
         });
       }, () => {
-        // Error in initialization, maybe PayPal isn't supported or something else
+        console.error('Error in initialization, maybe PayPal isn\'t supported or something else');
       });
           
         }
