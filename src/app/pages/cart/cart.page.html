@@ -1,8 +1,5 @@
 <ion-header>
   <ion-toolbar color="limegreen">  
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
       <div *ngFor="let page of backPages">
           <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
       </div>

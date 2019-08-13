@@ -134,7 +134,7 @@ export class CheckoutPage implements OnInit {
         else{
           this.paymentAmount=this.total_price;
           console.log('Pay ??????????????');
-          this.payPal.init({PayPalEnvironmentProduction: 'ATJCXgYOtGsS7OmWLwxSVl-CoUoON92Z720-vHc76snhDI1EvQhkG7OqBp7IERDH-cYzJJfzVqsbClIA',
+          this.payPal.init({PayPalEnvironmentProduction: 'AayI9B0wq9DHQO30eyGkIKl71W6A7pPoKShPVGvSAV9uQz4UBehWUaf0cdP-0qwMV-CVyx3alJTEZhLS',
         PayPalEnvironmentSandbox:'sb-bg17y07629@business.example.com'
       }).then(() => {
         // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction

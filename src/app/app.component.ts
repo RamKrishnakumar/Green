@@ -50,12 +50,6 @@ export class AppComponent {
     url:'/login',
     icon:'log-out',
     id:'8'
-  },
-  {
-    title:'Exit',
-    role: 'cancel',
-    icon:'exit',
-    id:'9'
   }
 ];
 

@@ -31,7 +31,6 @@
     "card.io.cordova.mobilesdk": "^2.1.0",
     "com.paypal.cordova.mobilesdk": "^3.5.0",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
-    "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-advanced-http": "^2.1.1",
     "cordova-plugin-file": "^6.0.2",
@@ -93,8 +92,7 @@
       "com.paypal.cordova.mobilesdk": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }
