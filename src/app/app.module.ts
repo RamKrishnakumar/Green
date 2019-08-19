@@ -18,6 +18,7 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { HTTP_INTERCEPTORS , HttpClientModule } from '@angular/common/http';
 import { HttpConfigInterceptor } from '../../src/app/interceptor/httpconfig.interceptor';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

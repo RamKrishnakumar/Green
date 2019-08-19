@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CartserviceService } from '../../services/cartservice.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-dishview',
@@ -26,6 +27,7 @@ export class DishviewPage implements OnInit {
     constructor(public cartserviceService: CartserviceService,
                 public alertController: AlertController,
                 public loadingController: LoadingController,
+                public toastController: ToastController,
                 public router: Router) { }
   
   ngOnInit() {
@@ -61,7 +63,16 @@ export class DishviewPage implements OnInit {
   
     await alert.present();
   }
-  
+
+  async cartLoaded() {
+    const toast = await this.toastController.create({
+      message: 'Cart Loaded',
+      color: "dark",
+      duration: 1000,
+      position:"top",
+    });
+    toast.present();
+  }
   ionviewDidLoad(){
    
   }
@@ -73,7 +84,7 @@ export class DishviewPage implements OnInit {
       spinner: "bubbles"
     });
     await loading.present();
-    var productPrice = this.productCount * parseInt(this.product.data.main_price);
+    var productPrice = this.productCount * parseFloat(this.product.data.main_price);
     let cartProduct = {
       pro_id: this.product.data.id,
       pro_name: this.product.data.title,
@@ -89,7 +100,8 @@ export class DishviewPage implements OnInit {
       this.hideme= false;
       this.unhideme = true;
       loading.dismiss();
-    });
+        });
+    
   }
 
 
@@ -121,8 +133,25 @@ export class DishviewPage implements OnInit {
 
   //}
 
-  viewCart(){
-    this.router.navigate(['cart']);
+ viewCart(){
+  this.router.navigate(['cart']);
+  //   const loading= await this.loadingController.create({
+  //     message:'Please Wait',
+  //     translucent: true,
+  //     spinner: "bubbles"
+  //   });
+  //   await loading.present();
+  //   let cartItems = {
+  //     pro_id: this.product.data.id,
+  //     pro_name: this.product.data.title,
+  //     qty: this.productCount,
+  //     pro_price: this.product.data.main_price,
+  //   }
+    // this.cartlistService.cartList(cartItems).then((val) => {
+    //   this.cartLoaded();
+    //   loading.dismiss();
+      
+    // });
   }
 
 }

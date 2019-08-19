@@ -3,12 +3,14 @@ import { Storage } from '@ionic/storage';
 
 
 const CART_KEY = 'cartItems';
+//const CART_LIST= 'cartList';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartserviceService {
  theCart: any[] = [];
+//  theCartList: any[]=[];
   
   constructor(public storage: Storage) { }
 
@@ -22,7 +24,7 @@ export class CartserviceService {
           let index= result.findIndex(x => x.pro_id == product.pro_id);
           let prevQuantity = parseInt(result[index].qty);
          product.qty = (prevQuantity + product.qty);
-         let currentPrice = (parseInt(product.totalPrice) * product.qty);
+         let currentPrice = (parseFloat(product.price) * product.qty);
          product.totalPrice = currentPrice;
          result.splice(index,1);
          result.push(product);
@@ -84,6 +86,32 @@ export class CartserviceService {
    getCartItems() {
     return this.storage.get(CART_KEY);
   }
+
+  // cartList(product){
+  //   return this.getCartList().then(result => {
+  //     if(result){
+  //       if(!this.containsObject(product,result)) {
+  //         result.push(product);
+  //         return this.storage.set(CART_LIST,result);
+  //       } else {
+  //         let index= result.findIndex(x => x.productid == product.productid);
+  //         let prevQuantity = parseInt(result[index].qty);
+  //        product.qty = (prevQuantity + product.qty);
+  //       //  let currentPrice = (parseInt(product.productprice) * product.qty);
+  //       //  product.totalPrice = currentPrice;
+  //        result.splice(index,1);
+  //        result.push(product);
+  //        return this.storage.set(CART_LIST,result);
+  //        }
+  //     } else {
+  //       return this.storage.set(CART_LIST, [product]);
+  //     }
+  //   })
+  // }
+
+  // getCartList(){
+  //   return this.storage.get(CART_LIST);
+  // }
 
 
 

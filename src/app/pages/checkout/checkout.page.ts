@@ -39,7 +39,7 @@ export class CheckoutPage implements OnInit {
               public alertController: AlertController,
               public router: Router,
               private payPal: PayPal,
-              public authService: AuthService) { 
+              public authService: AuthService,) { 
     this.customerId = JSON.parse(window.localStorage.getItem('userKey'));
     this.customerName = JSON.parse(window.localStorage.getItem('usernameKey'));
     this.payment_method = JSON.parse(window.localStorage.getItem('paymethodKey'));
@@ -59,7 +59,7 @@ export class CheckoutPage implements OnInit {
       this.cartItem = val;
       if(this.cartItem.length>0){
         this.cartItem.forEach((v, indx) => {
-          this.productAmt += parseInt(v.totalPrice);
+          this.productAmt += parseFloat(v.totalPrice);
         });
         this.gstAmount= this.productAmt * this.gstPercent;
         this.total_price= this.productAmt + this.gstAmount;
@@ -91,6 +91,7 @@ export class CheckoutPage implements OnInit {
           this.cartserviceService.getCartItems()
           .then((val) => {
             this.cartItem = val;
+            console.log(this.cartItem);
             var b;
             for(b in this.cartItem){
               this.array[b] = this.cartItem[b].pro_id;
@@ -100,10 +101,10 @@ export class CheckoutPage implements OnInit {
             }            
             if(this.cartItem.length >0 ){
               let qty = this.cartItems.forEach((v,idx) => {v.pro_id});
-              let body = 'payment_method=' + this.payment_method +'&email=' + this.user_details.data.email + '&name=' + this.user_details.data.name + '&contact_no=' + this.user_details.data.contact_no + '&remark=' + this.user_details.data.remark + '&province=' + this.user_details.data.province + '&city=' + this.user_details.data.city + '&zipcode=' + this.user_details.data.zipcode + '&address=' + this.user_details.data.address + '&users_id=' + this.user_details.data.users_id + '&total_price=' + this.total_price + '&pro_id=' + this.array + '&pro_name=' + this.array1 + '&qty=' + this.array2 + '&price=' +this.array3;
+              let body = 'payment_method=' + this.payment_method +'&email=' + this.user_details.data.email + '&name=' + this.user_details.data.name + '&contact_no=' + this.user_details.data.contact_no + '&remark=' + this.user_details.data.remark + '&province=' + this.user_details.data.province + '&city=' + this.user_details.data.city + '&zipcode=' + this.user_details.data.zipcode + '&address=' + this.user_details.data.address + '&users_id=' + this.user_details.data.users_id + '&total_price=' + this.total_price +'&pro_id=' + this.array + '&pro_name=' + this.array1 + '&qty=' + this.array2 + '&price=' +this.array3 ;//'&cart_list=' + JSON.stringify(this.cartItem)
               this.authService.PlaceOrder(body).then((result) => {
                 this.order_response = result;
-                if(this.order_response==true)
+                if(this.order_response.status==true)
                {
                 console.log(this.order_response);
                 this.cartserviceService.removeAllCartItems().then(val => {

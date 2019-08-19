@@ -90,6 +90,8 @@ export class CartPage implements OnInit {
       window.localStorage.setItem('paymethodKey', JSON.stringify(this.selectedRadioItem));
     }
 
+    
+
 
    async loadCartItems(){
      const loading = await this.loadingController.create({
@@ -105,7 +107,7 @@ export class CartPage implements OnInit {
        if(this.cartItem.length > 0){
          this.cartItem.forEach((v, index) => {
            //this.totalAmount -= this.totalAmount;
-           this.totalAmount += parseInt(v.totalPrice);
+           this.totalAmount += parseFloat(v.totalPrice);
            });
        this.isEmptyCart=true;
        loading.dismiss();
@@ -131,8 +133,7 @@ export class CartPage implements OnInit {
      this.cartserviceService.removeFromCart(itm).then(() => {
        this.loadCartItems();
        this.totalAmount -= this.totalAmount;
-       loading.dismiss();
-       
+       loading.dismiss();       
      });
    }
 
@@ -156,8 +157,14 @@ export class CartPage implements OnInit {
    }
 
 
-
-  
-  
+   async cartLoaded() {
+    const toast = await this.toastController.create({
+      message: 'Cart Loaded',
+      color: "dark",
+      duration: 1000,
+      position:"top",
+    });
+    toast.present();
+   }
     
 }

@@ -222,7 +222,7 @@ export class AuthService {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://greenchili.ca/apisecure/location/locations/",requestOptions).subscribe(res => {
+          this.http.get(" http://wiesoftware.com/greenchili/apisecure/location/locations/",requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -239,7 +239,7 @@ export class AuthService {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
-          this.http.get("http://greenchili.ca/apisecure/location/locationMenu/"+ id,requestOptions).subscribe(res => {
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationMenu/"+ id,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -259,7 +259,7 @@ export class AuthService {
             'Accept': 'application/json',            
           });
           const requestOptions = new RequestOptions({ headers: headers });
-          this.http.get(" http://greenchili.ca/apisecure/location/locationMenuDishes/"+location_id+"/"+id ,requestOptions).subscribe(res => {
+          this.http.get(" http://wiesoftware.com/greenchili/apisecure/location/locationMenuDishes/"+location_id+"/"+id ,requestOptions).subscribe(res => {
           resolve(res.json());
            },(err) => {
             reject(err);
@@ -275,7 +275,7 @@ export class AuthService {
             });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get("http://greenchili.ca/apisecure/location/locationDishDetails/"+id,requestOptions).subscribe(res => {
+          this.http.get("http://wiesoftware.com/greenchili/apisecure/location/locationDishDetails/"+id,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
@@ -295,7 +295,7 @@ export class AuthService {
           });
           const requestOptions = new RequestOptions({ headers: headers });
           //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.post(" http://wiesoftware.com/greenchili/apisecure/payment/paymentBilling", body,requestOptions).subscribe(res => {
+          this.http.post("  http://wiesoftware.com/greenchili/apisecure/payment/paymentBilling", body,requestOptions).subscribe(res => {
            resolve(res.json());
            },(err) => {
             reject(err);
