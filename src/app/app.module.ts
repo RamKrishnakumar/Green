@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PayPal } from '@ionic-native/paypal/ngx';
 import { HTTP_INTERCEPTORS , HttpClientModule } from '@angular/common/http';
 import { HttpConfigInterceptor } from '../../src/app/interceptor/httpconfig.interceptor';
+import { HTTP } from '@ionic-native/http/ngx'
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { HttpConfigInterceptor } from '../../src/app/interceptor/httpconfig.inte
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ReactiveFormsModule, FormsModule, HttpModule, HttpClientModule,IonicStorageModule.forRoot()],
   providers: [
+    HTTP,
     StatusBar,
     SplashScreen,AuthService,CartserviceService,PayPal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'online-reservation', loadChildren: './pages/online-reservation/online-reservation.module#OnlineReservationPageModule' },
-
+  
   
 ];
 

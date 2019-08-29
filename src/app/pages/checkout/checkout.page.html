@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <div *ngFor="let page of backPages">
+    <div *ngFor="let page of backPages" style="float: left">
       <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>
-    <ion-title>Checkout</ion-title>
+    <ion-title style="font-size: 7vw;padding-left: 2vh">Checkout</ion-title>
   </ion-toolbar>
 </ion-header>
 

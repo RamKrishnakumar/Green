@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
@@ -45,27 +45,67 @@ export class AppComponent {
     url:'/about-us',
     icon:'document',
     id:'7'
-  },{
-    title:'Logout',
-    url:'/login',
-    icon:'log-out',
-    id:'8'
   }
+  // ,{
+  //   title:'Logout',
+  //   url: this.presentAlertConfirm(),
+  //   icon:'log-out',
+  //   id:'8'
+  // }
 ];
-
+ public user_id: any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public router:Router
+    public router:Router,
+    private alertController: AlertController
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+    this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.show();
+      if(this.user_id == null || this.user_id== undefined){
+        this.router.navigate(['login']);
+        this.splashScreen.hide();
+      }
+      else{
+        this.router.navigate(['home']);
+        this.splashScreen.hide();
+      }
     });
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.Logout();
+          }
+        }
+        
+      ]
+    });
+
+    await alert.present();
+  }
+  Logout(){
+   this.router.navigate(['login']);
   }
 }

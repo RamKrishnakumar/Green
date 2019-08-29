@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController,AlertController, LoadingController } from '@ionic/angular';
+import { ToastController,AlertController, LoadingController, Platform } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { HTTP } from '@ionic-native/http/ngx';
+import { from } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
+
 
 
 
@@ -36,8 +41,12 @@ constructor(private formBuilder: FormBuilder,
             private toastController: ToastController,
             public authService: AuthService,
             public alertController: AlertController,
-            public loadingController:LoadingController
+            public loadingController:LoadingController,
+            public platform: Platform,
+            private http: HTTP
               ) { }
+  
+  public isMD = this.platform.is('ios');
 
 
 
@@ -99,8 +108,20 @@ async invalid() {
 
 async errorAlert() {
   const alert = await this.alertController.create({
-    header: 'Alert',
-    message: 'please try after sometime, network error',
+    header: 'Error',
+    message: this.error,
+    buttons: ['OK'],
+    cssClass: "toast-design"
+  });
+
+  await alert.present();
+
+}
+
+async successAlert() {
+  const alert = await this.alertController.create({
+    header: 'Success',
+    message: this.data,
     buttons: ['OK'],
     cssClass: "toast-design"
   });
@@ -167,6 +188,7 @@ SignUp(){
     });
   await loading.present();
    let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+   //let body= 'title='+ 'foo' + '&body=' + 'bar' + '&userId=' + 1;
    this.authService.UserLogin(body).then((result) => {
       this.validate_response = result;
       if(this.validate_response.status==false){
@@ -182,12 +204,83 @@ SignUp(){
          this.loginsuccess();
          }
     }, (err) => {
+      this.error=err;
       loading.dismiss();
       this.errorAlert();
       this.validations_form.reset();
 
     });;
   }
+
+
+  public data: any;
+  //----------------------------------------------------------------------------native Http simon try-------------------
+  // async tryLogin(value){
+  //   //let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+  //   let body= 'title='+ 'foo'+
+  //   '&body='+ 'bar'+
+  //   '&userId='+ 1;
+  //   const loading = await this.loadingController.create({
+  //             message: 'Please Wait',
+  //             translucent: true,
+  //           });
+  //         await loading.present();
+  // let nativeCall = this.http.post('https://jsonplaceholder.typicode.com/post',body,{
+  //   // 'Content-Type': 'application/x-www-form-urlencoded',
+  //   "Content-type": "application/json; charset=UTF-8"
+  //   // 'Accept': 'application/json',
+  //   // 'Access-Control-Allow-Origin':'*',
+  //   // 'Access-Control-Allow-Method':'POST'
+  // });
+  // from(nativeCall).pipe(
+  //   finalize(() => loading.dismiss())
+  // )
+  // .subscribe(data => {
+  //   console.log('native data', data);
+  //   let parsed = JSON.parse(data.data).results;
+  //   this.data = parsed;
+  //   this.successAlert();
+  // }, err => {
+  //   this.error = err.error;
+  //   console.log(err.error);
+  //   this.errorAlert();
+  // });
+  // }
+
+
+  //------------------------------------------simon try-----------------------------------------------------------------
+  // async tryLogin(value){
+  //   const loading = await this.loadingController.create({
+  //         message: 'Please Wait',
+  //         translucent: true,
+  //       });
+  //     await loading.present();
+  //     let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
+  //     this.http.post('http://wiesoftware.com/greenchili/apisecure/login/loginUsers', {body},{
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //       'Accept': 'application/json'
+  //     })
+  //     .then(data => {
+    
+  //       console.warn(data.data);
+  //       this.data=data.data;
+  //       this.successAlert();
+  //       // console.warn(data.data); // data received by server
+  //       // console.warn(data.headers);
+  //       loading.dismiss();
+    
+  //     })
+  //     .catch(error => {
+    
+  //       //console.warn(error.status);
+  //       this.error= error.error;
+  //       this.errorAlert();
+  //       console.warn(error.error); // error message as string
+  //       //console.warn(error.headers);
+  //       loading.dismiss();
+    
+  //     });
+  // }
 //----------------------------------------------------------------------------------------------------------------------- 
 // Login Button function Ends here---------------------------------------------------------------------------------------
 

@@ -1,9 +1,11 @@
 <ion-header>
   <ion-toolbar>   
-    <div *ngFor="let page of appPages">
+    <div *ngFor="let page of appPages" style="float: left">
       <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>    
-    <ion-title style="font-size: 6vw">location_menu</ion-title>
+    <div style="font-size: 7vw; float: left;padding-left: 2vh">
+       Our Locations
+    </div>
   </ion-toolbar>
 </ion-header>
 

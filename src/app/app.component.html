@@ -18,6 +18,14 @@
                 </ion-label>
               </ion-item>
             </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item (click)="presentAlertConfirm()" style="cursor: pointer;">
+                <ion-icon  slot= "start" name="log-out"></ion-icon>
+                <ion-label>
+                  LogOut
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
           </ion-list>
         </ion-content>
       </ion-menu>

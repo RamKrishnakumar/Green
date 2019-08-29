@@ -8,12 +8,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 
-//let apiUrl = "http://wiesoftware.com/greenchili/apisecure/login/";
-//let apiUrl="http://localhost/greenchili/";
-//let apiUrl="http://localhost/greenchili/login/auth/user_login/,"
-
-
-
 @Injectable({
   providedIn: 'root'
  
@@ -80,51 +74,24 @@ export class AuthService {
   UserLogin(body){ 
     return new Promise((resolve,reject) => {
       //let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
-      
+      //email=ram123@gmal.com&password=Admi@123
       var headers = new Headers({
-           'Content-Type': 'application/x-www-form-urlencoded',
-           'Accept': 'application/json',
-            
+           'Content-Type': 'application/json; charset=utf-8',
+          // 'Accept': 'application/json',            
           });
           const requestOptions = new RequestOptions({ headers: headers });
           this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers/", body,requestOptions).subscribe(res => {
            resolve(res.json());
            this.response= res.json(); 
-           //this.test_body= body;
-          // this.successResponse();
+           console.log(this.response);
            },(err) => {
             reject(err);
-            //this.response = err;
-            this.test_body=body;
-            //this.error();
+            console.log(err);
           });
     });
   }
   
-  Login(body): Observable<any> {
-    return this.https.post<any>('http://wiesoftware.com/greenchili/apisecure/login/loginUsers/',body).pipe(tap(_ => this.log('login')),
-    catchError(this.handleError('login', []))
-    );
-
-  }
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log(message);
-  }
+  
   
 
   SignUp(body) {
@@ -235,7 +202,8 @@ export class AuthService {
       
       var headers = new Headers({
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',            
+            'Accept': 'application/json', 
+                       
           });
           const requestOptions = new RequestOptions({ headers: headers });
           
@@ -270,7 +238,7 @@ export class AuthService {
   ViewDish(id){
     return new Promise((resolve,reject) => {
       var headers = new Headers({          
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json; charset=utf-8',
             'Accept': 'application/json',       
             });
           const requestOptions = new RequestOptions({ headers: headers });
@@ -302,130 +270,5 @@ export class AuthService {
           });
     })
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  // login(value){
-  //   console.log(value);
-  //   let url = apiUrl + 'loginUsers';
-  //   let headers = new Headers();
-  //   headers.append('Access-Control-Allow-Origin' , '*');
-  //   headers.append('Access-Control-Allow-Methods', 'POST');
-  //   headers.append('Accept','application/json');
-  //   headers.append('content-type','application/json');
-  //     let options = new RequestOptions({ headers:headers});
-  //   return new Promise((resolve,reject)=>{
-  //      this.http.post(url,JSON.stringify(value), options).subscribe(res => {
-  //        console.log('succ');
-  //         resolve(res.json());
-  //       }, (err) => {
-  //         console.log('err');
-  //         console.log(err);
-  //         reject(err);
-  //       });
-  //   })
-  // }
-  
-
-  
-  
- 
-  
-
-
-
-
-
-
-
-
-  
-  // userlogin(value){
-    
-  //   return new Promise((resolve,reject) => {
-  //     //var headers = new Headers();
-  //     //this.http({method:'POST', url:apiUrl + '/loginUsers', data:value} )
-      
-  //     this.http.post(apiUrl + 'loginUsers', value).subscribe(res => {
-  //       console.log(res);
-  //        resolve(res.json());
-  //     }, (err) => {
-  //       console.log(err);
-  //       reject(err);
-  //     });
-  //   });
-  // }
-
-
- //apiUrl= "http://wiesoftware.com/greenchili/apisecure/login/";
-  
- 
- 
- // authorizaiton(value){
-  //   return new Promise((resolve,reject) => {
-  //     var headers = new Headers({'X-API-Key': apiKey});
-  //     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-  //     headers.append('Access-Control-Allow-Origin' , '*');
-  //     headers.append('Access-Control-Allow-Methods', 'POST, GET');
-  //     this.http.post(apiUrl, value, {headers: headers}).subscribe(res => {
-  //       resolve(res.json());
-  //     }, (err) => {
-  //       reject(err);
-  //     });
-  //   });
-  // }
-  // httpPost = {
-  //   headers: new HttpHeaders({
-  //     'Access-Control-Allow-Origin' : '*',
-  //     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
-  //     'Accept':'application/json;charset=utf-8',
-  //     //'content-type':'application/json'
-  //     'Content-type': 'application/x-www-form-urlencoded'
-  //   })
-  // } 
-
-  // userlogin(value) : Observable<any>{
-    
-  //   return this.http.post<any>(this.apiUrl + 'loginUsers', value).pipe(retry(1),
-  //   catchError(this.handleError)
-  //   )
-  // } 
-
-  // handleError(error) {
-  //   let errorMessage = 'Connection Fails';
-  //   if(error.error instanceof ErrorEvent) {
-  //     // Get client-side error
-  //     errorMessage = error.error.message;
-  //   } else {
-  //     // Get server-side error
-  //     errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-  //   }
-  //   window.alert(errorMessage);
-  //   return throwError(errorMessage);
-  // }
 
 }

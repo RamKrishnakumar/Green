@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <div *ngFor="let page of backPages">
+    <div *ngFor="let page of backPages" style="float: left">
       <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>
-    <ion-title style="font-size: 6vw">{{set_response.menu_type}}</ion-title>
+    <div style="font-size: 6vw;float: left;padding-left: 2vh">{{set_response.menu_type}}</div>
     <ion-button (click)="goToCart()" slot="end" color="limegreen"><ion-icon name="cart"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
