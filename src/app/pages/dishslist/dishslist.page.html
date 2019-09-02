@@ -3,7 +3,7 @@
     <div *ngFor="let page of backPages" style="float: left">
       <ion-icon [routerDirection]="'root'" [routerLink]="[page.url]" name="arrow-back" size="large" style="margin-top: 1%;cursor: pointer"></ion-icon>
     </div>
-    <div style="font-size: 6vw;float: left;padding-left: 2vh">{{set_response.menu_type}}</div>
+    <div style="font-size: 6vw;float: left;padding-left: 2vh;margin-top: 1%">{{set_response.menu_type}}</div>
     <ion-button (click)="goToCart()" slot="end" color="limegreen"><ion-icon name="cart"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>

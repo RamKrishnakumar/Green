@@ -76,8 +76,10 @@ export class AuthService {
       //let body = 'email=' + this.validations_form.value.email + '&password=' + this.validations_form.value.password;
       //email=ram123@gmal.com&password=Admi@123
       var headers = new Headers({
-           'Content-Type': 'application/json; charset=utf-8',
-          // 'Accept': 'application/json',            
+           //'Content-Type': 'application/json; charset=utf-8',
+          // 'Accept': 'application/json', 
+          'content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'           
           });
           const requestOptions = new RequestOptions({ headers: headers });
           this.http.post("http://wiesoftware.com/greenchili/apisecure/login/loginUsers/", body,requestOptions).subscribe(res => {
@@ -108,6 +110,24 @@ export class AuthService {
             reject(err);            
           });
     });
+  }
+
+  myOrders(user_id){
+    return new Promise((resolve,reject) => {
+      
+      
+      var headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',                      
+          });
+          const requestOptions = new RequestOptions({ headers: headers });
+          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
+          this.http.get(" http://wiesoftware.com/greenchili/apisecure/order/orderHistory/"+user_id,requestOptions).subscribe(res => {
+           resolve(res.json());
+           },(err) => {
+            reject(err);
+          });
+    })
   }
 
   UserDetails(user_id){
@@ -238,7 +258,7 @@ export class AuthService {
   ViewDish(id){
     return new Promise((resolve,reject) => {
       var headers = new Headers({          
-            'Content-Type': 'application/json; charset=utf-8',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',       
             });
           const requestOptions = new RequestOptions({ headers: headers });

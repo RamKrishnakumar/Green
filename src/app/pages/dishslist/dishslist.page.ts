@@ -65,7 +65,7 @@ async errorAlert() {
 
 dish_details:any;
 dish_detail:any;
-async viewDish(id){
+async viewDish(id:string){
   const loading= await this.loadingController.create({
     message: 'Please Wait',
     translucent: true,
@@ -74,6 +74,7 @@ async viewDish(id){
   await loading.present();
     this.authService.ViewDish(id).then((result) => {
       this.dish_details = result;
+      console.log(this.dish_details);
       if(this.dish_details.status==false){
         this.invalid();
         loading.dismiss();

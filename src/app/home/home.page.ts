@@ -267,6 +267,7 @@ export class HomePage {
     }, (err) => {
       this.errorAlert();
       loading.dismiss();
+      this.router.navigate(['login']);
     });;
   }
   async invalid() {

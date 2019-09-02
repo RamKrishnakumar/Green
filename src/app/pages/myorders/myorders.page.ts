@@ -3,6 +3,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { ToastController, AlertController } from '@ionic/angular';
 import 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+
 //import { ResourceLoader } from '@angular/compiler';
 
 @Component({
@@ -15,7 +17,8 @@ export class MyordersPage implements OnInit {
   constructor(public http: Http,
               public toastController: ToastController,
               public alertController: AlertController,
-              public router: Router) { 
+              public router: Router,
+              public authService: AuthService) { 
               this.user_id = JSON.parse(window.localStorage.getItem('userKey'));
               console.log(this.user_id);
               }
@@ -63,33 +66,17 @@ myOrder(){
     this.messageError=this.errorMessage;
   }
   else{
-    return new Promise((resolve,reject) => {
-      
-      
-      var headers = new Headers({
-            //'X-API-KEY': '123run',
-            //"Authorization": 'Basic',
-            //'username': 'devpankaj',
-            //'password': 'devpankaj',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',                      
-          });
-          const requestOptions = new RequestOptions({ headers: headers });
-          //let body = [{"email": this.validations_form.value.email, "password": this.validations_form.value.password}];
-          this.http.get(" http://wiesoftware.com/greenchili/apisecure/order/orderHistory/"+ this.user_id,requestOptions).subscribe(res => {
-           resolve(res.json());
-           },(err) => {
-            reject(err);
-          });
-    }).then((result) => {
+    this.authService.myOrders(this.user_id).then((result) => {
       this.order_history = result;
       console.log(this.order_history);
+      
       if(this.order_history.status==false){
         this.emptyOrder();
         this.messageError=this.errorMessage;
       }
       else if(this.order_history.status==true){
         this.order_data = this.order_history.data;
+        console.log(this.order_data);
       }
     }, (err) => {
       this.apiConnection();

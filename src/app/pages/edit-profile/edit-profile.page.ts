@@ -148,8 +148,34 @@ validation_messages= {
     });
     toast.present();
   }
+
+  async presentAlertConfirm(value) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are you sure you want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.updateProfile(value);
+          }
+        }
+        
+      ]
+    });
+
+    await alert.present();
+  }
   
-  updateProfile(){
+  updateProfile(value){
     let body = 'name='+ this.validations_form.value.name + '&email=' + this.validations_form.value.email +'&contact_no='+ this.validations_form.value.contact_no + '&address='+this.validations_form.value.address + '&city='+this.validations_form.value.city + '&province=' + this.validations_form.value.province +'&zipcode=' + this.validations_form.value.zipcode + '&remark='+ this.validations_form.value.remark ;
     this.authService.UpdateProfile(this.user_id,body).then((result) => {
       this.profile_updated = result;

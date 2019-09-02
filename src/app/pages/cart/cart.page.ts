@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartserviceService } from '../../services/cartservice.service';
 import { ToastController, AlertController, LoadingController } from '@ionic/angular';
-import { CheckoutPage } from '../checkout/checkout.page';
-
-//import { PickerOptions, loadingController } from '@ionic/core';
 import { Router } from '@angular/router';
-//import { ThrowStmt } from '@angular/compiler';
-//import { ConsoleReporter } from 'jasmine';
 import { Storage } from '@ionic/storage';
 
 @Component({

@@ -7,19 +7,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
+  <div style="align-content: center">
+   <h3>Last 5 Order Details</h3>
+  </div>
   <div *ngFor="let error of messageError" style="text-align: center; font-weight: bold">
     <p style="font-size: 30px">{{error.message1}}</p>
     <p>{{error.message2}}</p>
     <ion-button [routerDirection]="'root'" [routerLink]="[error.url]">Home</ion-button>
   </div>
-<div  style="border-style: solid; border-width: 2px;margin: 2px" *ngFor= "let order of order_data">
-  <ion-item style="font-weight: bold">Order id:<p slot="end">{{order.order_id}}</p></ion-item>
-  <ion-item style="font-weight: bold">Product:<p slot="end">{{order.product_order_title}}</p></ion-item>
-  <ion-item style="font-weight: bold">product quantity: <p slot="end">{{order.order_quantity}}</p></ion-item>
-  <ion-item style="font-weight: bold">Date:<p slot="end">{{order.order_date}}</p></ion-item>
-  <ion-item style="font-weight: bold">Payment Method<p slot="end">{{order.payment_type}}</p></ion-item>
 
-</div>
+ 
+<ion-card color="coral" *ngFor= "let order of order_data">
+ <ion-card-content>
+ 
+  <div style=" font-weight: bold;font-size: 130%; width: 60%; float: left;">{{order.order_date}}</div><div *ngIf=" order.order_status == 0 " style="width: 40%;float: left;align-items: center;">Waiting</div><div *ngIf="order.order_status == 1" style="width: 40%;float: left" >Delivered</div>
+ <div>
+  <div style="width: 50%;float: left;">
+    <p style="font-size: 100%;font-weight: bold; ">Order Num : #{{order.order_id}}</p>
+    <p style="font-size: 120%;font-weight: bold;">${{order.order_product_price*order.order_quantity}}</p>
+   </div>
+    <ion-button color="limegreen" slot="end" style="float: right">View details</ion-button>
+ </div>
+ 
+ </ion-card-content>
+</ion-card>
+
 
 </ion-content>
