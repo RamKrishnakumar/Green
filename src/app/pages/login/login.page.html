@@ -8,7 +8,7 @@
       </div>
       <form class="form" [formGroup]="validations_form" (ngSubmit)="tryLogin(validations_form.value)" style="padding-top:10%;">
         <div style="padding: 10px">
-            <ion-item style="opacity: 0.9" class="rcorners">
+            <ion-item style="opacity: 0.6" class="rcorners">
               <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px;width: 24px;padding-top: 20px" src="assets/icon/man-user(1).png"></div><ion-label position="floating" color="primary">Enter Email/Mobile No.<p style="color: red;float:left">*</p></ion-label>
               <ion-input type="text" formControlName="email"></ion-input> 
             </ion-item>
@@ -20,7 +20,7 @@
             </ng-container>
             </div>
             
-            <ion-item style="opacity: 0.9" class="rcorners">
+            <ion-item style="opacity: 0.6" class="rcorners">
               <div style="margin-inline-end: 22px;" slot="start" ><img style="height: 45px; width: 24px; padding-top: 20px" src="assets/icon/call-answer.png"></div><ion-label position="floating" color="primary">Password<p style="color: red;float:left">*</p></ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
