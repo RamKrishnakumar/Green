@@ -1,5 +1,5 @@
 # greenchili
-application for restraunt named GreenChili.
+WEb Applicaiton/ Cross platform app using Ionic 4
 Features
   1.login page
   2.SignUp page
@@ -9,5 +9,6 @@ Features
   6.order History
   7.Reactive Form with validations.
   8.Paypal payment Method
+//Screenshots availbale in issues..
 Build This using Rest API written in PHP.
 Built this in Traing Period.
